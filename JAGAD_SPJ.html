@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JAGAD SPJ — Daftar Periksa Kelengkapan SPJ BPS</title>
+<meta name="description" content="Cek dan cetak daftar kelengkapan dokumen pertanggungjawaban belanja per akun, lengkap dengan syarat sah dan catatan verifikasi. Tanpa login.">
+<style>
+:root{--pur:#2B1559;--pur2:#4a2a8a;--org:#F26B1D;--lil:#EEE8F7;--ink:#241a3a;--mut:#645c7a;--line:#ddd5ee;--bg:#faf8fd;--ok:#1d6b40;--okbg:#d6f0e0;--warn:#9a3d08;--warnbg:#ffe6d5;--blue:#1d4aa0;--bluebg:#dce8ff;--gray:#8a839c}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:Inter,"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);font-size:15px;line-height:1.5}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3{margin:0;color:var(--pur)}
+.hide{display:none!important}
+header.top{background:var(--pur);color:#fff;padding:10px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:sticky;top:0;z-index:20}
+.brand{font-weight:800;letter-spacing:.02em;font-size:19px}
+.brand small{display:block;font-weight:400;font-size:11.5px;color:#d7c9f3;letter-spacing:0}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav button{background:transparent;border:0;color:#e6dcf7;padding:7px 12px;border-radius:8px;cursor:pointer;font-weight:600}
+nav button.on{background:var(--org);color:#fff}
+nav button:hover:not(.on){background:rgba(255,255,255,.12)}
+main{max-width:1240px;margin:0 auto;padding:16px}
+.layout{display:grid;grid-template-columns:300px 1fr;gap:16px;align-items:start}
+.side{position:sticky;top:64px;max-height:calc(100vh - 80px);overflow:auto;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
+.side input{width:100%;padding:8px 10px;border:1px solid #c9bfe0;border-radius:8px;background:#fff;margin-bottom:8px}
+.acc{width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:0 0 6px;cursor:pointer;display:block}
+.acc:hover{background:var(--lil)}
+.acc.on{border-color:var(--org);background:#fff7f1}
+.acc b{color:var(--pur);font-size:14px}
+.acc span{display:block;font-size:12.5px;color:var(--mut)}
+.schs{margin:2px 0 8px 10px;display:flex;flex-direction:column;gap:4px}
+.schs button{text-align:left;border:0;background:transparent;padding:4px 8px;border-radius:7px;cursor:pointer;font-size:13.5px;color:var(--pur)}
+.schs button.on{background:var(--pur);color:#fff}
+.schs button:hover:not(.on){background:var(--lil)}
+.sbox{position:relative}
+.sbox input{padding-right:34px}
+.sbox input::-webkit-search-cancel-button{display:none}
+.qx{position:absolute;right:6px;top:5px;width:26px;height:26px;border:0;border-radius:50%;background:var(--lil);color:var(--pur);font-size:17px;line-height:1;cursor:pointer}
+.sugg{border:1px solid var(--line);border-radius:10px;background:#fff;max-height:62vh;overflow:auto;margin-bottom:8px}
+.sg-h{position:sticky;top:0;background:#f4effb;color:var(--pur2);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px}
+.sg{display:block;width:100%;text-align:left;border:0;border-top:1px solid #f0eaf8;background:#fff;padding:7px 10px;cursor:pointer;font-size:14px;color:var(--ink)}
+.sg small{display:block;color:var(--mut);font-size:12px;margin-top:1px}
+.sg:hover,.sg.on{background:var(--lil)}
+.sg.on{box-shadow:inset 3px 0 0 var(--org)}
+.sg-n{padding:8px 10px;font-size:12.5px;color:var(--mut)}
+mark{background:#ffe08a;color:inherit;border-radius:3px;padding:0 1px}
+.stabs{display:flex;gap:4px;margin:0 0 8px;background:var(--lil);padding:3px;border-radius:9px}
+.stabs button{flex:1;border:0;background:transparent;border-radius:7px;padding:5px 6px;font-size:12.5px;font-weight:700;color:var(--pur);cursor:pointer}
+.stabs button.on{background:var(--pur);color:#fff}
+.cnt{float:right;font-style:normal;font-size:11px;font-weight:700;background:var(--okbg);color:var(--ok);border-radius:99px;padding:1px 7px;margin-left:6px}
+.grph.fav{color:var(--org)}
+.it.hl{outline:3px solid var(--org);outline-offset:2px;border-radius:8px;background:#fff7f1}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}
+.ttl small{display:block;color:var(--mut);font-size:13px;font-weight:600}
+.ttl h2{font-size:21px;margin:2px 0 2px}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:12px}
+label{display:block;font-size:12.5px;font-weight:600;color:var(--pur);margin:0 0 3px}
+.meta input{width:100%;padding:8px 10px;border:1px solid #c9bfe0;border-radius:8px;background:#fff}
+input:focus,select:focus{outline:2px solid var(--org);border-color:var(--org)}
+.btn{background:var(--pur);color:#fff;border:0;border-radius:8px;padding:8px 14px;font-weight:600;cursor:pointer}
+.btn:hover{background:var(--pur2)}
+.btn.org{background:var(--org)}.btn.org:hover{background:#d95a10}
+.btn.ghost{background:#fff;color:var(--pur);border:1px solid #b9a9e0}.btn.ghost:hover{background:var(--lil)}
+.btn.sm{padding:5px 10px;font-size:13px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.tools .chk{display:flex;gap:6px;align-items:center;font-size:13.5px;color:var(--ink);font-weight:500;margin:0}
+.info{background:var(--lil);border-radius:10px;padding:10px 14px;font-size:14px}
+.info ul{margin:4px 0 0;padding-left:18px}
+.prog{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.bar{flex:1 1 180px;height:10px;background:#e7e1f3;border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--org);transition:width .2s}
+.bar.done i{background:#2f8f5b}
+.grp{background:var(--pur);color:#fff;font-weight:700;padding:7px 12px;border-radius:8px;margin:14px 0 6px;font-size:14px}
+.it{display:grid;grid-template-columns:44px 1fr;gap:10px;padding:10px 6px;border-bottom:1px solid var(--line)}
+.it.na{opacity:.55}
+.st{width:38px;height:38px;border-radius:9px;border:2px solid #b9a9e0;background:#fff;cursor:pointer;font-weight:800;font-size:15px;color:var(--pur)}
+.st[data-s="1"]{background:var(--ok);border-color:var(--ok);color:#fff}
+.st[data-s="2"]{background:#eceaf2;border-color:#bdb7cc;color:#5d566f;font-size:11px}
+.st:disabled{cursor:not-allowed;background:#eceaf2;border-color:#d7d2e3;color:#8a839c;font-size:11px}
+.it h3{font-size:15px;color:var(--ink);font-weight:700}
+.it .no{color:var(--gray);font-weight:600;margin-right:4px}
+.it p{margin:3px 0 0;font-size:14px;color:#3a3150}
+.cond{margin:3px 0 0;font-size:13px;color:var(--warn);font-weight:600}
+.tag{display:inline-block;font-size:11.5px;font-weight:700;padding:1px 8px;border-radius:99px;margin-left:6px;vertical-align:1px}
+.tag.p{background:var(--okbg);color:var(--ok)}
+.tag.s{background:var(--warnbg);color:var(--warn)}
+.tag.r{background:#dfe9fb;color:#1d4aa0}
+.grph{margin:12px 2px 6px;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--pur2)}
+.ref{margin-top:4px;font-size:12px;color:var(--mut)}
+.tier{margin-top:5px;font-size:13.5px;background:#fff7f1;border:1px solid #f7c9a8;border-radius:8px;padding:4px 10px;display:inline-block;color:#7a3205;font-weight:600}
+.kur{white-space:pre-wrap;background:#fff7f1;border:1px solid #f7c9a8;border-radius:8px;padding:10px;font-size:13.5px}
+.legend{font-size:13px;color:var(--mut);margin-top:6px}
+table.t{width:100%;border-collapse:collapse}
+table.t th{background:var(--pur);color:#fff;text-align:left;padding:8px 10px;font-size:13px}
+table.t td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;font-size:14px}
+.pj h3{font-size:17px;margin-bottom:6px}
+.pj .a{color:var(--mut);font-size:13px;margin-bottom:6px}
+.src li{margin-bottom:8px}
+#print{display:none}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.side{position:static;max-height:none}header.top{position:static}}
+@media print{
+ @page{size:A4;margin:12mm}
+ body{background:#fff;font-size:10pt}
+ header.top,main{display:none!important}
+ #print{display:block}
+ #print h1{font-size:14pt;text-align:center;margin:0}
+ #print .sub{text-align:center;font-weight:700;margin:2px 0 8px}
+ #print table{width:100%;border-collapse:collapse}
+ #print .mt td{border:0;padding:1px 4px;font-size:9.5pt}
+ #print .ct th,#print .ct td{border:1px solid #000;padding:3px 5px;font-size:9pt;vertical-align:top;color:#000}
+ #print .ct th{background:#e9e9e9;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ #print .ct tr{page-break-inside:avoid}
+ #print .ct thead{display:table-header-group}
+ #print .ct .g td{background:#f0f0f0;font-weight:700;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ #print .c{text-align:center;white-space:nowrap}
+ #print .sm{font-size:8pt;color:#333}
+ #print .sig{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px;page-break-inside:avoid;font-size:9.5pt}
+ #print .sig>div{text-align:center}
+ #print .sig i{display:block;height:64px}
+ #print .foot{margin-top:14px;font-size:8pt;color:#333}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">JAGAD SPJ<small>Jaga Administrasi dan Dokumen SPJ — daftar periksa terbuka, tanpa login</small></div>
+  <nav id="nav">
+    <button data-v="cek" class="on">Checklist</button>
+    <button data-v="pajak">Ringkasan pajak</button>
+    <button data-v="dasar">Dasar &amp; sumber</button>
+    <button data-v="cara">Cara pakai</button>
+  </nav>
+</header>
+<main>
+  <section id="v-cek" class="layout">
+    <aside class="side">
+      <div class="sbox"><input id="q" type="search" placeholder="Ketik akun, kata, atau kalimat…" autocomplete="off" aria-label="Cari akun, skema, atau dokumen" aria-controls="sugg"><button id="q-x" class="qx hide" type="button" aria-label="Hapus pencarian">&times;</button></div>
+      <div id="sugg" class="sugg hide" role="listbox" aria-label="Rekomendasi hasil pencarian"></div>
+      <div id="stabs" class="stabs" role="tablist"><button data-t="grp" class="on" type="button">Kelompok akun</button><button data-t="kode" type="button">Urut kode</button></div>
+      <div id="accs"></div>
+    </aside>
+    <div id="work"></div>
+  </section>
+  <section id="v-pajak" class="hide"></section>
+  <section id="v-dasar" class="hide"></section>
+  <section id="v-cara" class="hide"></section>
+</main>
+<div id="print"></div>
+
+<script>
+/* JAGAD SPJ — pustaka checklist. Semua butir bersumber dari dokumen yang diunggah pengguna.
+   v: 'P' = tertulis dalam Perka BPS 13/2026 (ketentuan); 'S' = praktik/lembar kerja satker atau materi Rakor — perlu divalidasi ke ketentuan terbaru.
+   src: kode sumber (lihat SRC).  th: ambang nilai (Rp) — butir hanya berlaku bila nilai transaksi > th.  */
+
+const SRC = {
+  P13: { t: 'Perka BPS No. 13 Tahun 2026 tentang Pedoman Administrasi Keuangan Kegiatan Sensus dan Survei di Lingkungan BPS', k: 'Ditetapkan 20 Januari 2026; mencabut Perka BPS No. 8 Tahun 2024. Berkas: "1 PERKA BPS No 13 Thn 2026 ttg PAK Sensus dan Survei.pdf".' },
+  K24: { t: 'Kriteria Kesesuaian SPJ (lembar kerja satker, berkas "Kriteria Kesesuaian SPJ.xlsx", 2024)', k: 'Versi lebih lama (merujuk SBM 2023 dan PAK sebelumnya). Bila berbeda dengan Perka 13/2026, Perka 13/2026 yang dipakai.' },
+  CKL: { t: 'Checklist SPJ Pelatihan Petugas Survei (SKP/SKNP 2026)', k: 'Lembar kerja satker untuk belanja bahan (521211), honor pengajar (521213), dan transport peserta (524114).' },
+  RKR: { t: 'Materi Rakor Administrasi Persiapan Akhir TA 2026, BPS Provinsi Jawa Timur, 12 Oktober 2026', k: 'Hasil pendampingan administrasi 38 kabupaten/kota; kontrol dan temuan berulang.' },
+  CTH: { t: 'Contoh lembar checklist kelengkapan SPJ SE2026 (BPS Kab. Malang)', k: 'Format lembar dengan kolom PPK dan PPSPM; dipakai sebagai acuan tata letak cetak dan berkas pembayaran.' },
+  PKP: { t: 'Checklist SPJ & Administrasi PKPP SE2026 (BPS Kab. Bojonegoro)', k: 'Khusus pelatihan petugas pengganti.' }
+};
+
+const GRP = { REN: 'A. Perencanaan dan legalitas', PEL: 'B. Pelaksanaan dan bukti prestasi', KEU: 'C. Keuangan dan pajak', PAY: 'D. Berkas pembayaran', UJI: 'E. Uji konsistensi akhir' };
+
+const LIB = {
+  kak: { g: 'REN', n: 'Kerangka Acuan Kegiatan (KAK)', v: 'P', src: ['P13', 'RKR'], d: 'Perka 13/2026, butir Kelengkapan Tagihan Pembayaran',
+    s: 'Diajukan oleh Penanggung Jawab kegiatan dan diketahui PPK. Menjelaskan kebutuhan, spesifikasi, dan volume secara memadai, bukan membenarkan transaksi yang sudah terjadi. Tidak memuat redaksi salinan dari kegiatan lain dan tidak menyebut nama penyedia atau lokasi final sebelum pemilihan selesai. Bertanggal sebelum komitmen dan pelaksanaan; isinya konsisten dengan undangan, daftar hadir, kontrak, dan pembayaran.' },
+  fp: { g: 'REN', n: 'Form Permintaan (Penanggung Jawab Kegiatan kepada PPK)', v: 'P', src: ['P13', 'RKR', 'CKL'], d: 'Perka 13/2026, butir Kelengkapan Tagihan Pembayaran',
+    s: 'Pintu awal sebelum PPK membuat komitmen. Harus ada, selaras dengan realisasi, dan bertanggal sebelum kegiatan atau transaksi berjalan. Pada praktik satker diajukan melalui aplikasi BOS.' },
+  komit: { g: 'REN', n: 'Dokumen komitmen (sesuai nilai pengadaan)', v: 'P', src: ['P13', 'RKR'], tier: true, d: 'Perka 13/2026, butir Komitmen dalam bentuk kontrak',
+    s: 'Pilih bentuk sesuai nilai: bukti pembelian/pembayaran (paling banyak Rp10 juta); kuitansi (paling banyak Rp50 juta); Surat Perintah Kerja/SPK (di atas Rp50 juta s.d. Rp200 juta); Surat Perjanjian (di atas Rp200 juta); atau Surat/Bukti Pesanan bila melalui e-purchasing — sesuai ketentuan PBJ pemerintah. Tanggal komitmen mendahului pelaksanaan; hindari dokumen susulan (post-facto).' },
+  komit2: { g: 'REN', n: 'Dokumen komitmen (bukti pembelian atau kuitansi)', v: 'P', src: ['P13'], tier: true, d: 'Perka 13/2026 Bab XIV.D.3',
+    s: 'Untuk paket data/pulsa: bukti pembelian/pembayaran (paling banyak Rp10 juta) atau kuitansi (paling banyak Rp50 juta).' },
+  prestasi: { g: 'PEL', n: 'Bukti prestasi pekerjaan', v: 'P', src: ['P13', 'RKR'], d: 'Perka 13/2026, butir Bukti Prestasi Pekerjaan',
+    s: 'Berita Acara Penyelesaian Pekerjaan, BAST Pekerjaan/Barang, Berita Acara Pembayaran, Berita Acara Kemajuan Pekerjaan, dan/atau bukti penyelesaian lainnya sesuai ketentuan PBJ. Harus merujuk ke dokumen komitmen (nomor dan tanggal), dan tidak terbit sebelum pekerjaan teruji.' },
+  kuitansi: { g: 'KEU', n: 'Kuitansi/bukti pembayaran dan nota pembelian asli', v: 'S', src: ['K24'], d: 'Kriteria Kesesuaian SPJ (lembar kerja satker)',
+    s: 'Kuitansi bermaterai sesuai ketentuan bea meterai; nota/struk asli dari penyedia. Nama, tanggal, nilai, dan rincian sesuai dokumen komitmen. Jenis pajak ditentukan dari kuitansi pembelian.' },
+  alokasi: { g: 'PEL', n: 'Daftar alokasi / tanda terima barang yang diserahkan', v: 'P', src: ['P13', 'K24'], d: 'Perka 13/2026 Bab IV.D.4',
+    s: 'Memuat penerima, jenis, dan jumlah barang yang diserahkan, ditandatangani penerima. Jumlah sesuai nota dan KAK.' },
+  ppn: { g: 'KEU', n: 'Faktur Pajak dan SSP/bukti setor PPN', v: 'P', src: ['P13', 'CKL'], th: 2000000, c: 'Rekanan PKP dan nilai transaksi di atas Rp2.000.000 (tidak termasuk PPN).', d: 'Perka 13/2026 Bab XV.E',
+    s: 'Tarif 12% dengan DPP nilai lain (11/12 × harga jual). Untuk rekanan non-PKP, PPN tetap dipungut Instansi Pemerintah dengan SSP/ID Billing tanpa faktur pajak (Pasal 126 PER-11/PJ/2025 sebagaimana dikutip Perka). Tidak dipungut untuk transaksi paling banyak Rp2 juta yang bukan pecahan, pembayaran dengan KKP, dan pengecualian lain (tab Pajak). Setor paling lama 7 hari setelah pembayaran UP.' },
+  pph22: { g: 'KEU', n: 'SSP/bukti setor PPh Pasal 22 (1,5%)', v: 'P', src: ['P13'], th: 2000000, c: 'Pembelian barang (warung/toko) di atas Rp2.000.000, tidak termasuk PPN.', d: 'Perka 13/2026 Bab XV.B',
+    s: 'Dasar: harga pembelian tidak termasuk PPN. Memakai NPWP rekanan; bila tidak ada, NIK pemilik usaha. Dikecualikan: pembayaran dengan KKP; BBM, benda pos, air, telepon, listrik; rekanan yang menyerahkan fotokopi surat keterangan bebas. Setor paling lama 7 hari setelah pembayaran UP. Bukti setor ditempel pada dossier SPM terkait dan direviu sebelum SPP/SPM.' },
+  pph23: { g: 'KEU', n: 'SSP/bukti setor PPh Pasal 23 (2%)', v: 'P', src: ['P13'], c: 'Jasa katering/boga, jasa lainnya, sewa selain tanah/bangunan, penyelenggaraan paket meeting, pengiriman.', d: 'Perka 13/2026 Bab XV.C',
+    s: 'Tanpa batas minimal nilai. Memakai NPWP usaha rekanan; bila tidak ada NPWP usaha, gunakan NIK pemilik usaha dengan PPh 21 sebesar 50% × 5% dari nilai tagihan. Setor paling lama 7 hari setelah pembayaran UP.' },
+  pph21: { g: 'KEU', n: 'SSP/bukti setor PPh Pasal 21', v: 'P', src: ['P13', 'CKL'], d: 'Perka 13/2026 Bab XV.A',
+    s: 'Disesuaikan dengan peraturan perpajakan: DPP dan tarif berbeda untuk PNS/TNI/Polri (final), PPPK/pegawai tidak tetap, bukan pegawai (DPP 50% × bruto), dan peserta kegiatan. Honor mitra satuan O-B: perhatikan PTKP, bila honor sebulan tidak melebihi PTKP tidak dipotong. Rincian pada tab Pajak.' },
+  transfer: { g: 'PAY', n: 'Bukti transfer bank / CMS (pembayaran nontunai)', v: 'S', src: ['K24', 'RKR', 'CTH'], d: 'Materi Rakor Prov. Jatim 12/10/2026; Kriteria Kesesuaian SPJ',
+    s: 'Nontunai adalah kebiasaan utama. Nomor rekening pada SPJ harus sama dengan bukti transfer; bukti transfer cocok dengan rekap kuitansi dan ditempel pada transaksi penerima yang tepat. Retur atau rekening tidak aktif segera direkonsiliasi dan dicatat sebagai exception.' },
+  tunai: { g: 'PAY', n: 'Dokumen pengecualian pembayaran tunai', v: 'S', src: ['K24', 'RKR'], c: 'Hanya bila dibayar tunai.', d: 'Kriteria Kesesuaian SPJ; Rakor 12/10/2026 (menyebut Perka BPS No. 7 Tahun 2024 tentang transaksi nontunai)',
+    s: 'Pengecualian yang terdokumentasi: surat pernyataan KPA / SPTJM untuk pembayaran tunai, surat pendelegasian wewenang Bendahara, kuitansi ditandatangani penerima, dan foto dokumentasi penyerahan uang.' },
+  sk: { g: 'REN', n: 'SK KPA / SK KBPS', v: 'P', src: ['P13'], d: 'Perka 13/2026 Bab VII', s: 'Memuat nama, tugas dan fungsi, serta besaran rate sesuai ketetapan SBM/SBKS. Mutakhir terhadap kondisi lapangan (perubahan petugas diikuti pembaruan SK).' },
+  daftarhadir: { g: 'PEL', n: 'Daftar hadir', v: 'P', src: ['P13', 'RKR'], d: 'Perka 13/2026, butir Daftar Hadir',
+    s: 'Ditandatangani lengkap. Jumlah undangan = jumlah hadir = jumlah konsumsi/transport/roomlist; selisih dijelaskan tertulis. Peserta yang tidak hadir dijelaskan dalam notulen/laporan.' },
+  undangan: { g: 'PEL', n: 'Surat undangan', v: 'P', src: ['P13', 'CKL'], d: 'Perka 13/2026, butir Undangan',
+    s: 'Memuat hari/tanggal, waktu, tempat, dan peserta. Selaras dengan KAK, daftar hadir, dan jadwal.' },
+  jadwal: { g: 'PEL', n: 'Jadwal kegiatan', v: 'P', src: ['P13', 'CKL'], d: 'Perka 13/2026, butir Jadwal kegiatan',
+    s: 'Mengikuti jadwal pada pedoman penyelenggaraan; mencantumkan sesi dan jam sehingga durasi kegiatan dapat diuji.' },
+  notulen: { g: 'PEL', n: 'Notulen / laporan kegiatan dan dokumentasi', v: 'P', src: ['P13', 'RKR'], d: 'Perka 13/2026, butir Notulensi dan Dokumentasi',
+    s: 'Divalidasi notulis dan pimpinan rapat. Memuat peserta yang tidak hadir. Notulen dan dokumentasi menjadi bukti prestasi konsumsi; laporan perjalanan menjadi bukti transpor.' },
+  st: { g: 'REN', n: 'Surat Tugas', v: 'P', src: ['P13'], d: 'Perka 13/2026 Bab VIII.A.2.a-c',
+    s: 'Diterbitkan pejabat berwenang (Kepala satker untuk pelaksana pada satker berkenaan; atasan langsung untuk Kepala satker). Memuat paling sedikit pemberi tugas, pelaksana tugas, waktu, dan tempat pelaksanaan. Kepala satker yang bertugas di wilayah kerjanya sendiri: ditandatangani yang bersangkutan dengan "atas nama" dan dilengkapi surat pendelegasian wewenang tertulis dari atasan langsung (Perban BPS No. 1 Tahun 2023 Pasal 112-113).' },
+  spd: { g: 'PEL', n: 'SPD dan visum', v: 'P', src: ['P13'], d: 'Perka 13/2026 Bab VIII.A.4.c',
+    s: 'Ditandatangani PPK dan pejabat di tempat tujuan (BPS setempat / instansi pengundang / tempat kegiatan, termasuk Plt/Plh). Nama dan jabatan wajib tercantum, cap diutamakan.' },
+  spdKolektif: { g: 'PEL', n: 'SPD kolektif', v: 'P', src: ['P13', 'CKL'], d: 'Perka 13/2026 Bab IX.A.4.a.4',
+    s: 'Dibuat kolektif, ditandatangani dan distempel oleh hotel. Bila penyelenggara hanya menyediakan akomodasi dan/atau konsumsi, SPD ditandatangani penyelenggara kegiatan (panitia/penanggung jawab).' },
+  pernyataanKend: { g: 'KEU', n: 'Surat pernyataan tidak menggunakan kendaraan dinas', v: 'P', src: ['P13', 'RKR', 'CKL'], d: 'Perka 13/2026 Bab VIII dan IX',
+    s: 'Dilampirkan untuk pembayaran transpor yang bersifat lumpsum, kecuali "pihak lain" (selain pejabat negara/ASN/TNI/Polri). Dibuat per pelaksana; memuat identitas, kegiatan, tanggal, dan tujuan yang sama dengan Surat Tugas (mengikuti contoh surat pernyataan satker).' },
+  dpr: { g: 'KEU', n: 'Daftar Pengeluaran Riil (DPR)', v: 'P', src: ['P13', 'RKR'], c: 'Bila bukti transportasi/penginapan tidak ada (selain lumpsum).', d: 'Perka 13/2026 Bab VIII',
+    s: 'Ditandatangani yang bersangkutan dan disetujui PPK. Mendukung biaya at cost yang tidak ada tanda buktinya; tidak dipakai untuk komponen lumpsum.' },
+  rincianBiaya: { g: 'KEU', n: 'Rincian biaya perjalanan dinas', v: 'P', src: ['P13', 'K24'], d: 'Perka 13/2026 Bab VIII',
+    s: 'Merinci uang harian, transpor, penginapan, dan komponen lain per pelaksana sesuai SBM/SK KPA. Total sama dengan kuitansi.' },
+  drpp: { g: 'KEU', n: 'Daftar rincian perhitungan pembayaran (DRPP) perjalanan dinas', v: 'P', src: ['P13', 'CKL'], d: 'Perka 13/2026 Bab IX',
+    s: 'Per penerima: nama, asal/tujuan, tarif, jumlah hari, dan tanda tangan penerima. Jumlah penerima harus selaras dengan daftar hadir.' },
+  kuitansiPerjadin: { g: 'KEU', n: 'Kuitansi perjalanan dinas / kuitansi transpor', v: 'P', src: ['P13'], d: 'Perka 13/2026 Bab VIII',
+    s: 'Bermaterai sesuai ketentuan; nilai sama dengan rincian biaya dan bukti pendukung.' },
+  lpd: { g: 'PEL', n: 'Laporan perjalanan dinas dan dokumentasi', v: 'P', src: ['P13', 'RKR'], d: 'Perka 13/2026 Bab VIII',
+    s: 'Ditandatangani pelaksana perjalanan dan pihak yang tepat. Memuat tujuan, kehadiran, dan hasil pelaksanaan. Transpor tidak dapat dibayar hanya dengan notulen. Bukti konsumsi dan bukti transpor dipisahkan.' },
+  tiket: { g: 'KEU', n: 'Tiket dan boarding pass / bukti moda transportasi', v: 'P', src: ['P13'], c: 'Bila menggunakan pesawat, kereta api, bus, atau moda lain.', d: 'Perka 13/2026 Bab VIII.A.4.e',
+    s: 'Tiket dan boarding pass (pesawat, kereta), tiket bus atau tanda bukti moda lain. Biaya transpor dibayar at cost sesuai tanda bukti.' },
+  penginapan: { g: 'KEU', n: 'Bukti penginapan atau surat pernyataan tidak menginap', v: 'P', src: ['P13', 'K24'], d: 'Perka 13/2026 Bab VIII.A.4.f-g',
+    s: 'Bukti pembayaran hotel/penginapan (at cost, dalam batas SBM). Bila dibeli lewat agen perjalanan, bukti dilengkapi stempel hotel atau surat pernyataan menginap. Bila tidak menginap: surat pernyataan tidak menginap (dapat dibayar 30% tarif hotel kota tujuan secara lumpsum). Tidak diberikan untuk perjalanan pergi-pulang pada hari yang sama, kecuali kondisi urgent dengan bukti at cost.' },
+  roomlist: { g: 'PEL', n: 'List kamar hotel (roomlist)', v: 'P', src: ['P13', 'RKR'], c: 'Paket meeting fullboard.', d: 'Perka 13/2026 Bab IX',
+    s: 'Dilegalisasi pihak hotel. Memuat nama, nomor kamar, dan pengesahan hotel. Selaras dengan daftar hadir dan jumlah peserta. Eselon II/fungsional utama ke atas: 1 kamar 1 orang; eselon III/fungsional madya ke bawah: 1 kamar 2 orang.' },
+  tagihanHotel: { g: 'KEU', n: 'Tagihan hotel / invoice', v: 'P', src: ['P13', 'K24'], d: 'Perka 13/2026 Bab IX',
+    s: 'Rincian paket (halfday/fullday/fullboard), jumlah peserta, dan hari sesuai komitmen; sama dengan roomlist dan daftar hadir.' },
+  prosesPBJ: { g: 'REN', n: 'Berkas pengadaan dan tata cara pembayaran', v: 'P', src: ['P13', 'RKR'], d: 'Perka 13/2026 Bab IX; Perpres PBJ; PMK tata cara pembayaran',
+    s: 'Mengacu Perpres Pengadaan Barang/Jasa Pemerintah dan PMK tata cara pembayaran: dokumen persiapan dan pemilihan, komitmen (kontrak/SPK/pesanan), bukti prestasi. Rakor: tim PBJ menetapkan 38 butir checklist sebagai standar dokumen pengadaan (satu paket dossier per transaksi) — gunakan daftar 38 butir tersebut untuk rincian.' },
+  pernyataanPJ: { g: 'REN', n: 'Surat pernyataan Penanggung Jawab Kegiatan (fasilitas kantor tidak mencukupi)', v: 'P', src: ['P13', 'K24'], d: 'Perka 13/2026 Bab IX.A.2.f',
+    s: 'Membuktikan kegiatan di luar kantor karena fasilitas kantor tidak mencukupi. KAK paket meeting juga menjelaskan kebutuhan secara rinci.' },
+  undangan2: { g: 'PEL', n: 'Surat undangan ditandatangani pejabat setingkat eselon II / Kepala satker penyelenggara', v: 'P', src: ['P13', 'CKL'], d: 'Perka 13/2026 Bab IX',
+    s: 'Tanda tangan paling rendah pejabat setingkat eselon II atau Kepala satuan kerja penyelenggara.' },
+  bukti_transpor: { g: 'KEU', n: 'Bukti biaya transportasi', v: 'P', src: ['P13'], c: 'Kegiatan luar kota.', d: 'Perka 13/2026 Bab IX.B.4.a.7', s: 'Tiket/boarding pass/bukti pembayaran moda transportasi peserta dan panitia.' },
+  baSerah: { g: 'PEL', n: 'BAST / berita acara serah terima pekerjaan', v: 'P', src: ['P13', 'CKL', 'RKR'], d: 'Perka 13/2026 Bab VII', s: 'Menyatakan pekerjaan selesai dan diterima; tidak terbit sebelum pekerjaan teruji; merujuk SPK dan lampiran.' },
+  npwp_rek: { g: 'KEU', n: 'Fotokopi NPWP dan nomor/buku rekening', v: 'P', src: ['P13', 'K24', 'CKL'], c: 'Bila diperlukan.', d: 'Perka 13/2026 Bab VII.B dan X', s: 'Identitas dan rekening penerima valid sebelum pembayaran; nama rekening sama dengan penerima di kuitansi.' },
+  uji_kronologi: { g: 'UJI', n: 'Kronologi tanggal masuk akal', v: 'S', src: ['RKR'], d: 'Materi Rakor 12/10/2026',
+    s: 'KAK/FP → komitmen → pelaksanaan → verifikasi (BAPP/BAST) → pembayaran → arsip. Tidak ada dokumen yang bertanggal sebelum dokumen dasarnya (cek backdating/post-facto).' },
+  uji_angka: { g: 'UJI', n: 'Angka dan nama sama di semua dokumen', v: 'S', src: ['RKR'], d: 'Materi Rakor 12/10/2026',
+    s: 'Jumlah undangan = hadir = konsumsi/transport/roomlist. Nilai KAK/FP = kontrak = kuitansi = SSP = bukti transfer. Bila dua sumber berbeda, jangan dipaksa cocok: masukkan exception list, rekonsiliasi, simpan bukti koreksi.' },
+  uji_rek: { g: 'UJI', n: 'Rekening, identitas penerima, dan pajak valid', v: 'S', src: ['RKR'], d: 'Materi Rakor 12/10/2026',
+    s: 'Rekening dan identitas penerima tervalidasi; jenis pajak sesuai substansi transaksi dan direviu sebelum SPP/SPM (bukan dibetulkan sesudah pembayaran); bukti potong/setor menempel pada dossier.' },
+  uji_dossier: { g: 'UJI', n: 'Satu SPM, satu dossier, satu indeks', v: 'S', src: ['RKR'], d: 'Materi Rakor 12/10/2026',
+    s: 'Berkas final bertanda tangan, dipindai (scan), dapat dicari, dan berurutan. Nama berkas standar: satker-tanggal-SPM-jenis dokumen. Koreksi disimpan bersama kronologi dan alasannya.' },
+  spp: { g: 'PAY', n: 'Surat Permintaan Pembayaran (SPP)', v: 'S', src: ['CTH', 'CKL'], d: 'Contoh lembar checklist SE2026 (BPS Kab. Malang)', s: 'Nilai sesuai rekap kuitansi dan SPM.' },
+  spm: { g: 'PAY', n: 'Surat Perintah Membayar (SPM)', v: 'S', src: ['CTH', 'CKL'], d: 'Contoh lembar checklist SE2026 (BPS Kab. Malang)', s: 'Ditandatangani PPSPM; nomor dan nilai tercatat pada lembar ini. Satu SPM memiliki satu set dokumen lengkap.' },
+  sp2d: { g: 'PAY', n: 'Surat Perintah Pencairan Dana (SP2D)', v: 'S', src: ['CTH', 'CKL'], d: 'Contoh lembar checklist SE2026 (BPS Kab. Malang)', s: 'Diterima dari KPPN setelah SPM; dilampirkan pada dossier.' }
+};
+
+/* Butir tambahan khusus skema ditulis inline: [id, overrides] atau string id. Override dapat mengubah n/s/c/v/src/d/g. */
+const X = (id, o) => [id, o || {}];
+
+const ACCOUNTS = [
+  { kode: '521211', nama: 'Belanja Bahan', ket: 'Konsumsi rapat, perlengkapan habis pakai, penggandaan/pencetakan, pulsa/paket data', schemes: [
+    { id: 'a1', nama: 'Konsumsi rapat/pertemuan', dasar: 'Perka 13/2026 Bab III',
+      info: ['Konsumsi rapat hanya untuk rapat luring paling singkat 2 jam.', 'Makan dan kudapan (termasuk minuman) dapat diberikan bila melibatkan unit eselon I lain / K/L / instansi pemerintah / pihak lain (mis. mitra petugas sensus/survei, wartawan). Kudapan dan minum saja bila melibatkan satker/eselon II lain atau setara; "satker lain" = kantor vertikal menurut struktur organisasi.', 'Pajak konsumsi PPh 22 atau PPh 23 tergantung jenis barang/jasa, bukti kuitansi, dan sarana penyajian.'],
+      items: ['kak', 'fp', X('undangan', { v: 'P' }), 'daftarhadir', X('notulen', { n: 'Notula rapat dan dokumentasi' }), 'komit', 'prestasi', 'kuitansi',
+        X('pph22', { n: 'SSP PPh Pasal 22 (1,5%) — konsumsi dibeli di warung/toko', c: 'Konsumsi dibeli di warung/toko atau katering dengan penyajian dalam kemasan; nilai di atas Rp2.000.000.', s: 'Pajak dilihat dari kuitansi pembelian. NPWP rekanan; bila tidak ada, NIK pemilik usaha. Dikecualikan: pembayaran dengan KKP, BBM/benda pos/air/telepon/listrik. Setor paling lama 7 hari setelah pembayaran UP.' }),
+        X('pph23', { n: 'SSP PPh Pasal 23 (2%) — konsumsi melalui jasa katering', c: 'Katering dengan peralatan dan perlengkapan untuk proses pembuatan, penyimpanan, sampai penyajian.' }), 'ppn', 'transfer'] },
+    { id: 'a2', nama: 'Perlengkapan habis pakai', dasar: 'Perka 13/2026 Bab IV',
+      info: ['Barang habis dipakai dalam satu kegiatan, tidak direncanakan sebagai persediaan, tidak tersisa saat laporan keuangan dibuat, dan tidak membentuk aset.', 'Bila ada sisa yang disimpan di gudang, dicatat sebagai persediaan di SAKTI modul Persediaan.'],
+      items: ['kak', 'fp', 'komit', 'alokasi', 'prestasi', 'kuitansi', 'ppn', 'pph22', 'transfer'] },
+    { id: 'a3', nama: 'Penggandaan / pencetakan', dasar: 'Perka 13/2026 Bab V',
+      info: ['Dipakai untuk kuesioner, leaflet, buku pedoman, publikasi, dsb. Dicetak di dalam atau luar kantor dengan pertimbangan kemampuan, kerahasiaan, dan keamanan dokumen negara.', 'Akun 521211 bila hasil habis pakai; akun 521811 bila menghasilkan persediaan barang konsumsi. Sisa di akhir periode: opname fisik lalu penyesuaian ke akun persediaan.'],
+      items: ['kak', 'fp', 'komit', 'prestasi', X('alokasi', { v: 'S', src: ['K24'], d: 'Kriteria Kesesuaian SPJ (lembar kerja satker)' }), 'kuitansi', 'ppn', 'pph22', 'transfer'] },
+    { id: 'a4', nama: 'Pulsa / paket data internet', dasar: 'Perka 13/2026 Bab XIV',
+      info: ['Satuan biaya paket data diatur Surat Plt. Sestama No. B-446/02100/PR.130/2025 tanggal 26 Agustus 2025 (Standar Biaya Paket Data dan Asuransi), karena PMK 32/2025 (SBM 2026) tidak mengatur lagi.', 'Pengadaan mengikuti isi perjanjian/kontrak, pedoman teknis kegiatan, atau surat edaran pimpinan. Hanya nomor prabayar yang dapat diganti.'],
+      items: ['kak', 'fp', 'komit2',
+        X('daftarPenerima', { g: 'PEL', n: 'Daftar nama dan nomor HP penerima', v: 'P', src: ['P13', 'RKR'], d: 'Perka 13/2026 Bab XIV.D.4', s: 'Disusun sebelum transaksi dari master petugas yang sama dengan SPK; nomor HP direkonsiliasi dengan daftar tugas/petugas yang sah.' }),
+        X('tandaTerimaData', { g: 'PEL', n: 'Bukti tanda terima paket data / pulsa', v: 'P', src: ['P13', 'RKR'], d: 'Perka 13/2026 Bab XIV.D.5', s: 'Tangkapan layar (screenshot) bukti paket data/pulsa per penerima. Bila tidak ada: surat pernyataan dari yang bersangkutan, diketahui PPK. Bukti distribusi individual atau justifikasi resmi.' }),
+        X('pph22', { s: 'Pajak PPh 22 sebesar 1,5% untuk transaksi di atas Rp2.000.000. NPWP rekanan; bila tidak ada, NIK pemilik usaha.' }), 'transfer'] }
+  ] },
+  { kode: '521213', nama: 'Belanja Honor Output Kegiatan', ket: 'Honor tim pelaksana, pengajar Innas/Inda/petugas, petugas mitra, petugas PNS BPS', schemes: [
+    { id: 'b1', nama: 'Honor tim pelaksana kegiatan (Pokja)', dasar: 'Perka 13/2026 Bab VII.A.4.a',
+      info: ['Tim lintas eselon I dalam satu K/L dibatasi paling banyak 25 orang. Honor tim yang melibatkan instansi lain hanya dibayar pada bulan ada keterlibatan/koordinasi.', 'Klasifikasi SBM BPS saat ini: paling banyak 2 honor tim dalam 1 bulan (akumulatif dari semua DIPA).'],
+      items: ['kak', 'fp', X('sk', { n: 'SK KPA/SK KBPS (tugas dan fungsi, besaran rate, kedudukan dalam Pokja)', s: 'Mencakup tugas dan fungsi, besaran rate, dan kedudukan dalam Pokja sesuai ketetapan SBM.' }),
+        X('laporanTim', { g: 'PEL', n: 'Laporan tim / output pekerjaan', v: 'P', src: ['P13', 'K24'], d: 'Perka 13/2026 Bab VII.A.4.a.4', s: 'Menunjukkan output nyata pada bulan yang dibayarkan.' }),
+        'rekap_k', X('rekapJabatan', { g: 'KEU', n: 'Rekapitulasi sesuai jabatan dalam keanggotaan Pokja', v: 'P', src: ['P13'], d: 'Perka 13/2026 Bab VII.A.4.a.6', s: 'Pengelompokan per jabatan (pengarah, penanggung jawab, koordinator, ketua, sekretaris, anggota, staf) dan rate tiap jabatan.' }),
+        X('matriks', { g: 'REN', n: 'Matriks alokasi Pokja tim pelaksana', v: 'S', src: ['K24'], d: 'Kriteria Kesesuaian SPJ (lembar kerja satker)', s: 'Alokasi tim dan bulan pembayaran; membantu menguji batas honor tim per bulan.' }),
+        'pph21', 'transfer', 'tunai'] },
+    { id: 'b2', nama: 'Honor pengajar (Innas / Inda / pengajar petugas)', dasar: 'Perka 13/2026 Bab VII.A.4.b',
+      info: ['Dibayar sesuai satuan pada Pedoman Satuan Biaya Kegiatan Statistik (SBKS) yang berlaku. 1 jam pelajaran (jamlat) = 45 menit.'],
+      items: ['kak', 'fp', X('sk', { n: 'SK KPA (nama, tugas dan fungsi, rate SBKS)', s: 'Mencakup nama, tugas dan fungsi, serta besaran rate sesuai ketetapan SBKS.' }),
+        X('stInstruktur', { g: 'REN', n: 'Surat tugas instruktur', v: 'S', src: ['CKL', 'K24'], d: 'Checklist SPJ Pelatihan Petugas Survei; Kriteria Kesesuaian SPJ', s: 'Dapat dicetak dari BOS; dasar hukum disesuaikan; nomor surat dari naskah dinas satker.' }),
+        X('jadwal', { s: 'Mengikuti jadwal pada pedoman penyelenggaraan pelatihan; 1 jamlat = 45 menit.' }),
+        X('daftarhadir', { n: 'Daftar hadir (panitia, pengajar, dan peserta)' }),
+        X('jamMengajar', { g: 'PEL', n: 'Daftar real aktivitas / jam mengajar per sesi per hari', v: 'S', src: ['CKL', 'K24'], d: 'Checklist SPJ Pelatihan Petugas Survei', s: 'Ditandatangani instruktur; jam mengajar sama dengan jadwal dan hitungan honor.' }),
+        X('bahanAjar', { g: 'PEL', n: 'Bahan ajar / modul', v: 'S', src: ['CKL'], d: 'Checklist SPJ Pelatihan Petugas Survei', s: 'Bahan paparan atau modul materi yang diajarkan.' }),
+        X('laporanPengajar', { g: 'PEL', n: 'Laporan pengajar (Innas / Inda / pengajar petugas)', v: 'P', src: ['P13', 'CKL'], d: 'Perka 13/2026 Bab VII.A.4.b.7', s: 'Ditandatangani instruktur yang bersangkutan.' }),
+        'rekap_k', 'pph21', X('npwp_rek', { v: 'S', src: ['CKL'] }), 'transfer', 'tunai'] },
+    { id: 'b3', nama: 'Honor petugas mitra (non-PNS / PNS non-BPS)', dasar: 'Perka 13/2026 Bab VII.A.4.c; Rakor 12/10/2026',
+      info: ['Dibayar dengan satuan O-B (Orang-Bulan) sesuai SBKS; item honor harus tercantum dalam Harga Kegiatan Statistik (HKS). Pembayaran setelah pekerjaan selesai, dibuktikan BAST.', 'Rakor: honor hanya dibayar setelah tiga syarat teknis dan lima syarat administrasi terpenuhi. Tahan pembayaran bila output belum dapat diverifikasi.'],
+      items: ['kak', 'fp', X('sk', { n: 'SK KPA (nama, tugas dan fungsi, rate SBKS)', s: 'Mencakup nama, tugas dan fungsi, serta besaran rate sesuai SBKS. Diperbarui bila petugas mengundurkan diri atau diganti.' }),
+        X('spk', { g: 'REN', n: 'Surat Perjanjian Kerja (SPK)', v: 'P', src: ['P13', 'RKR', 'CKL'], d: 'Perka 13/2026 Bab VII.A.4.c.4', s: 'Ditandatangani kedua pihak; materai dan otorisasi ditempatkan benar; format petugas pengganti mengikuti templat yang ditentukan.' }),
+        X('lampiranSPK', { g: 'REN', n: 'Lampiran SPK (target SLS/Sub-SLS final) dan addendum perubahan', v: 'S', src: ['RKR'], d: 'Materi Rakor 12/10/2026 (Kategori 3)', s: 'Setiap pembayaran honor wajib punya SPK + lampiran target final + riwayat perubahan. Perubahan petugas atau beban kerja diikuti addendum/pembaruan lampiran.' }),
+        X('kkp', { g: 'PEL', n: 'Kertas Kerja Pemeriksaan (KKP)', v: 'S', src: ['RKR'], d: 'Materi Rakor 12/10/2026 (Kategori 4-5)', s: 'Memuat dasar kuantitas dan status selesai sebagai dasar nilai pembayaran. Syarat teknis: status OPEN nihil sesuai kontrak dan kondisi riil; DRAFT terverifikasi bukti lapangan; approval PML final; BANR dipakai untuk menjustifikasi nonrespons.' }),
+        X('bapp', { g: 'PEL', n: 'BAPP dan/atau BAST sesuai perjanjian kerja', v: 'P', src: ['P13', 'RKR'], d: 'Perka 13/2026 Bab VII.A.4.c.6', s: 'Berita Acara Pemeriksaan Pekerjaan dan/atau Berita Acara Serah Terima. BAST tidak terbit sebelum pekerjaan teruji; BAPP, BAST, dan nilai bayar saling mengunci.' }),
+        X('pernyataanSelesai', { g: 'PEL', n: 'Surat pernyataan penyelesaian pekerjaan', v: 'S', src: ['RKR'], d: 'Materi Rakor 12/10/2026', s: 'Satu paket dengan KKP, BAPP, BAST.' }),
+        X('putusKontrak', { g: 'PEL', n: 'Surat pemutusan perjanjian kerja', v: 'S', src: ['K24'], c: 'Bila ada petugas berhenti.', d: 'Kriteria Kesesuaian SPJ', s: 'Beserta pembaruan SK/SPK dan perhitungan honor sesuai pekerjaan yang diselesaikan.' }),
+        X('pengganti', { g: 'PEL', n: 'Dokumen petugas pengganti (PKPP)', v: 'S', src: ['PKP', 'RKR'], c: 'Hanya untuk petugas pengganti.', d: 'Checklist SPJ & Administrasi PKPP SE2026', s: 'Sertifikat MOOC (12 JP) dan klasikal (10 JP), BA pendampingan awal (24 JP) ditandatangani PML, bukti submit pakta integritas, dokumen pelatihan dan penugasan lengkap.' }),
+        'rekap_k', 'pph21', 'transfer', 'tunai'] },
+    { id: 'b4', nama: 'Honor petugas (PNS BPS)', dasar: 'Perka 13/2026 Bab VII.A.4.d',
+      info: ['Honor petugas organik/non-organik dapat dibayarkan jika item honor tersebut sudah tercantum dalam Harga Kegiatan Statistik (HKS).'],
+      items: ['kak', 'fp', X('sk', { n: 'SK KPA (nama, tugas dan fungsi, rate SBKS)' }), 'rekap_k', 'pph21', 'transfer', 'tunai'] }
+  ] },
+  { kode: '521219', nama: 'Belanja Barang Non Operasional Lainnya', ket: 'Jasa pengiriman/ekspedisi, asuransi petugas', schemes: [
+    { id: 'c1', nama: 'Jasa pengiriman / ekspedisi', dasar: 'Perka 13/2026 Bab XI',
+      info: ['Akun 521219 hanya untuk pengiriman dengan jasa selain Kantor Pos (pengiriman surat dinas melalui Pos Pusat memakai akun 521114).', 'Penggunaan 521219 tidak dapat direvisi ke akun lain untuk belanja pengiriman dokumen dan jasa asuransi.', 'Perhatian: Bab XI menyebut "SSP PPN pengiriman 1,1%", sedangkan Bab XV menyatakan tarif PPN 12% dengan DPP nilai lain 11/12 dan DPP jasa pengiriman 10% dari harga jual. Konfirmasi tarif efektif ke Bendahara sebelum SPP.'],
+      items: ['kak', 'fp', X('resi', { g: 'PEL', n: 'Invoice / resi pengiriman / Surat Tanda Terima Barang (STT)', v: 'P', src: ['P13', 'K24'], d: 'Perka 13/2026 Bab XI.D.3 (opsional)', s: 'Opsional menurut Perka, tetapi dianjurkan sebagai bukti bahwa pengiriman terjadi; nomor resi sesuai tujuan dan tanggal.' }),
+        'komit', 'prestasi', X('npwp_rek', { n: 'Fotokopi NPWP dan rekening koran' }), X('ppn', { n: 'Faktur Pajak dan SSP PPN pengiriman', th: 0, c: 'Rekanan PKP.', s: 'Dasar pengenaan jasa pengiriman 10% dari harga jual/nilai penyerahan. Perka Bab XI menulis 1,1% (lihat catatan di atas).' }), X('pph23', { c: 'Jasa pengiriman.' }), 'transfer'] },
+    { id: 'c2', nama: 'Asuransi petugas', dasar: 'Perka 13/2026 Bab XII (Belanja Jasa Asuransi)',
+      info: ['Belanja jasa asuransi untuk petugas mitra kegiatan sensus/survei BPS.', 'Pengadaan sampai Rp50 juta: jaminan berupa komitmen penyedia. Di atas Rp50 juta: Surat Pernyataan Kesanggupan Penyedia Barang/Jasa (SPKPBJ).'],
+      items: ['kak', 'fp', 'komit',
+        X('premi', { g: 'KEU', n: 'Premi sesuai jumlah peserta', v: 'P', src: ['P13', 'K24'], d: 'Perka 13/2026 Bab XII.D.4', s: 'Jumlah peserta yang diasuransikan sama dengan SK/daftar petugas.' }),
+        X('polis', { g: 'PEL', n: 'Polis asuransi', v: 'P', src: ['P13', 'K24'], d: 'Perka 13/2026 Bab XII.D.5', s: 'Polis sesuai pengadaan.' }),
+        X('kepesertaan', { g: 'PEL', n: 'Kartu tanda kepesertaan atau sertifikat kepesertaan', v: 'P', src: ['P13', 'K24'], d: 'Perka 13/2026 Bab XII.D.6', s: 'Tanggal sertifikat harus sesuai tanggal mulai penugasan.' }),
+        'kuitansi', 'transfer'] }
+  ] },
+  { kode: '521811', nama: 'Belanja Barang Persediaan Barang Konsumsi', ket: 'ATK, bahan cetakan, alat rumah tangga yang dikelola sebagai persediaan', schemes: [
+    { id: 'd1', nama: 'Persediaan barang konsumsi', dasar: 'Perka 13/2026 Bab VI',
+      info: ['Untuk barang yang direncanakan pengadaannya berkelanjutan dan disimpan di gudang (ATK, bahan cetakan, buku peraturan, dll.). Diinput di SAKTI modul Persediaan dan dicatat berdasarkan hasil opname fisik tiap semester dan tahunan.', 'Bila akun non-persediaan menghasilkan persediaan: revisi DIPA/POK dan dokumen sumber bila waktu dan pagu memungkinkan, atau lakukan penyesuaian akuntansi.'],
+      items: ['kak', 'fp', 'komit', X('prestasi', { s: 'Berita Acara Penyelesaian Pekerjaan, BAST Pekerjaan/Barang, atau Berita Acara Pembayaran (tiga bentuk ini yang disebut untuk persediaan), sesuai ketentuan PBJ.' }),
+        X('persediaanSAKTI', { g: 'PEL', n: 'Pencatatan SAKTI modul Persediaan dan Berita Acara Opname Fisik', v: 'P', src: ['P13'], d: 'Perka 13/2026 Bab VI.B', s: 'Barang diinput pada SAKTI modul Persediaan; nilai persediaan pada laporan keuangan berdasarkan Berita Acara Opname Fisik setiap periode pelaporan.' }),
+        X('alokasi', { v: 'S', src: ['K24'], d: 'Kriteria Kesesuaian SPJ' }), 'kuitansi', 'ppn', 'pph22', 'transfer'] }
+  ] },
+  { kode: '522141', nama: 'Belanja Sewa', ket: 'Sewa gedung/ruang pertemuan, gudang, tenda, kursi/meja, kendaraan', schemes: [
+    { id: 'e1', nama: 'Sewa (gedung, gudang, peralatan, kendaraan)', dasar: 'Perka 13/2026 Bab X',
+      info: ['Untuk sewa gedung dan bangunan, perhatikan keabsahan dokumen kepemilikannya.', 'Sewa kendaraan untuk kegiatan insidentil hanya bila mobilitas tinggi/berskala besar dan tidak tersedia kendaraan dinas, dilakukan selektif dan efisien.'],
+      items: ['kak', 'fp', 'komit', 'prestasi', X('npwp_rek', { n: 'Fotokopi NPWP dan rekening koran' }),
+        X('invoice', { g: 'KEU', n: 'Invoice', v: 'P', src: ['P13', 'K24'], d: 'Perka 13/2026 Bab X.D.6', s: 'Rincian objek sewa, jangka waktu, dan nilai sesuai komitmen.' }),
+        X('identSewa', { g: 'REN', n: 'Fotokopi SIM/KTP dan STNK', v: 'P', src: ['P13'], c: 'Sewa kendaraan perorangan.', d: 'Perka 13/2026 Bab X.D.7', s: 'Identitas pemilik dan bukti kepemilikan kendaraan.' }),
+        X('ppn', {}), X('pph4', { g: 'KEU', n: 'SSP/bukti setor PPh Pasal 4 ayat (2) final 10%', v: 'P', src: ['P13', 'K24'], c: 'Sewa bangunan/ruangan selain hotel atau penginapan.', d: 'Perka 13/2026 Bab X.D.10; Bab XV.D', s: 'Final 10% dari jumlah bruto nilai persewaan tanah dan/atau bangunan. Setor paling lama 7 hari setelah pembayaran UP.' }),
+        X('pph23', { c: 'Sewa selain tanah/bangunan (kendaraan, tenda, kursi/meja).' }), 'transfer'] }
+  ] },
+  { kode: '522151', nama: 'Belanja Jasa Profesi', ket: 'Honorarium narasumber dan moderator', schemes: [
+    { id: 'f1', nama: 'Narasumber / moderator', dasar: 'Perka 13/2026 Bab VII.B',
+      info: ['Narasumber/moderator berasal dari luar K/L penyelenggara atau perguruan tinggi di luar satker penyelenggara; honor hanya dari satker penyelenggara.', 'Honor narasumber tidak dapat dibayarkan untuk kegiatan diklat/pelatihan. Satuan jam 60 menit. Pendamping narasumber dibatasi: eselon I/II maks 2, eselon III maks 1, eselon IV ke bawah tanpa pendamping.'],
+      items: ['kak', 'fp', X('sk', { n: 'SK KPA belanja jasa profesi (nama narasumber/moderator, golongan, rate)', s: 'Berisi nama narasumber/moderator, golongan, dan rate.' }),
+        X('undNarsum', { g: 'PEL', n: 'Undangan narasumber / moderator', v: 'P', src: ['P13', 'K24'], d: 'Perka 13/2026 Bab VII.B.4.d', s: 'Memuat materi, hari, waktu, dan tempat.' }),
+        X('undangan', { n: 'Undangan peserta' }), X('jadwal', { s: 'Jadwal kegiatan sesuai panduan penyelenggaraan.' }),
+        X('hadirNarsum', { g: 'PEL', n: 'Daftar hadir narasumber / moderator', v: 'P', src: ['P13', 'K24'], d: 'Perka 13/2026 Bab VII.B.4.g', s: 'Ditandatangani; durasi sesuai jadwal dan hitungan honor.' }),
+        X('cv', { g: 'PEL', n: 'CV (Curriculum Vitae)', v: 'P', src: ['P13', 'K24'], d: 'Perka 13/2026 Bab VII.B.4.h', s: 'Menunjukkan keahlian narasumber/moderator.' }),
+        X('paparan', { g: 'PEL', n: 'Bahan paparan narasumber / notulen', v: 'P', src: ['P13', 'K24'], d: 'Perka 13/2026 Bab VII.B.4.i', s: 'Moderator tidak perlu menyerahkan bahan paparan.' }),
+        X('kuitansi', { v: 'P', src: ['P13'] }), X('npwp_rek', {}), 'pph21', 'transfer'] }
+  ] },
+  { kode: '522191', nama: 'Belanja Jasa Lainnya', ket: 'Event organizer, sosialisasi melalui media, iklan, publisitas, call center', schemes: [
+    { id: 'g1', nama: 'Jasa lainnya', dasar: 'Perka 13/2026 Bab XIII',
+      info: ['Dipakai bila jasa tidak dapat ditampung pada kelompok akun 52211, 52212, 52213, 52214, dan 52215.'],
+      items: ['kak', 'fp', X('undangan', { n: 'Undangan', c: 'Kegiatan berupa penyelenggaraan sosialisasi.' }), X('daftarhadir', { c: 'Kegiatan berupa penyelenggaraan sosialisasi.' }),
+        'komit', 'prestasi', X('laporanKeg', { g: 'PEL', n: 'Laporan pelaksanaan kegiatan disertai dokumentasi', v: 'P', src: ['P13', 'K24'], d: 'Perka 13/2026 Bab XIII.D.6', s: 'Memuat output kegiatan dan dokumentasi yang dapat diuji.' }),
+        'ppn', X('pph23', {}), 'transfer'] }
+  ] },
+  { kode: '524111', nama: 'Belanja Perjalanan Dinas Biasa', ket: 'Perjalanan dinas jabatan melewati batas kota', schemes: [
+    { id: 'h1', nama: 'Perjalanan dinas biasa', dasar: 'Perka 13/2026 Bab VIII.A',
+      info: ['Uang harian dibayar lumpsum sesuai jumlah hari riil (batas tertinggi SBM). Bila transpor lokal dibayar riil karena lebih dari satu tujuan di kabupaten/kota yang sama, uang harian 60%.', 'Biaya transpor melewati batas kota dibayar at cost sesuai tanda bukti; bila tidak ada, memakai Daftar Pengeluaran Riil (selain lumpsum).'],
+      items: [X('kak', { v: 'S', src: ['K24', 'CTH'], d: 'Kriteria Kesesuaian SPJ; contoh lembar checklist SE2026', n: 'Kerangka Acuan Kegiatan (KAK)', s: 'Dicantumkan pada praktik satker; tidak disebut pada butir Kelengkapan Tagihan Perjalanan Dinas Biasa Perka 13/2026. Bila ada, KAK menjelaskan kebutuhan dan dibuat sebelum penugasan.' }), 'fp', 'st', 'spd', 'rincianBiaya', 'tiket', 'penginapan', 'dpr', 'pernyataanKend', 'lpd', 'kuitansiPerjadin', 'transfer'] }
+  ] },
+  { kode: '524113', nama: 'Belanja Perjalanan Dinas Dalam Kota', ket: 'Perjalanan dinas dalam kota (sampai dengan 8 jam / lebih dari 8 jam)', schemes: [
+    { id: 'i1', nama: 'Dalam kota sampai dengan 8 jam', dasar: 'Perka 13/2026 Bab VIII.B',
+      info: ['Transpor diberikan lumpsum (batas tertinggi SBM) atau berdasarkan SK KPA, sesuai jumlah hari riil. Beberapa tujuan dalam satu kesatuan penugasan hanya dibayar satu kali transpor dalam kota.', 'Dapat dilakukan tanpa penerbitan SPD; pembebanan biaya dicantumkan PPK dalam Surat Tugas. Uang makan tetap diterima selama ada catatan kehadiran di kantor.'],
+      items: ['fp', X('st', { s: 'Diterbitkan atasan langsung. Memuat pemberi tugas, pelaksana, waktu, tempat, dan pembebanan biaya (dicantumkan PPK).' }),
+        X('visum', { g: 'PEL', n: 'Visum (tanda tiba/berangkat) pejabat di tempat tujuan', v: 'P', src: ['P13'], d: 'Perka 13/2026 Bab VIII.B.4.c', s: 'Ditandatangani pejabat di tempat pelaksanaan atau pihak terkait (BPS setempat / instansi pengundang / tempat kegiatan; Plt/Plh). Nama dan jabatan wajib, cap diutamakan.' }),
+        X('kuitansiPerjadin', { n: 'Kuitansi transpor' }), 'dpr', 'pernyataanKend', 'lpd', 'transfer'] },
+    { id: 'i2', nama: 'Dalam kota lebih dari 8 jam', dasar: 'Perka 13/2026 Bab VIII.C',
+      info: ['Uang harian dapat dibayar lumpsum. Biaya transpor lumpsum (batas tertinggi SBM); bila lebih, sesuai bukti riil yang dapat dipertanggungjawabkan.', 'Menginap dapat dibayar at cost dalam batas SBM bila diperlukan; tidak untuk pergi-pulang hari yang sama, kecuali kondisi urgent dengan bukti at cost.'],
+      items: ['fp', 'st', 'spd', X('kuitansiPerjadin', { n: 'Kuitansi transpor' }), 'dpr', 'rincianBiaya',
+        X('jadwal', { n: 'Jadwal kegiatan (lebih dari 8 jam) atau dokumen pendukung lainnya', s: 'Menunjukkan durasi kegiatan lebih dari 8 jam.' }), 'pernyataanKend', 'lpd', 'transfer'] }
+  ] },
+  { kode: '524114', nama: 'Belanja Perjalanan Dinas Paket Meeting Dalam Kota', ket: 'Transport/uang harian peserta dan penyelenggaraan paket meeting (halfday, fullday, fullboard) dalam kota', schemes: [
+    { id: 'j1', nama: 'Tagihan perjalanan peserta/panitia', dasar: 'Perka 13/2026 Bab IX.A.4.a',
+      info: ['Peserta: transport, uang harian paket meeting (hanya fullboard), uang harian perjalanan/penginapan bila kesulitan transportasi. Narasumber/moderator hanya dibayar uang harian ketika menjadi peserta.', 'Halfday dan fullday tidak diberikan uang harian.'],
+      items: ['fp', X('undangan2', {}), X('st', { n: 'Surat Tugas (peserta)' }), 'spdKolektif', 'daftarhadir', 'pernyataanKend', 'notulen', 'drpp', 'transfer'] },
+    { id: 'j2', nama: 'Penyelenggaraan paket meeting', dasar: 'Perka 13/2026 Bab IX.A.4.b',
+      info: ['Paket meeting hanya bila melibatkan peserta dari K/L lain / instansi / masyarakat. Diselenggarakan di luar kantor bila fasilitas kantor tidak mencukupi (dibuktikan surat pernyataan Penanggung Jawab Kegiatan).', 'Halfday: paling singkat 5 jam tanpa menginap. Fullday: paling singkat 8 jam tanpa menginap. Fullboard: sehari penuh dan menginap. Bila tidak ada hotel memadai di dalam kota untuk pelatihan petugas, revisi akun ke 524119 terlebih dahulu.'],
+      items: ['kak', 'fp', 'undangan2', 'pernyataanPJ', X('st', {}), 'spdKolektif', 'daftarhadir', 'jadwal', 'notulen', 'roomlist', 'tagihanHotel', 'prosesPBJ',
+        X('kuitansi', { v: 'S' }), X('pph23', { c: 'Penyelenggaraan paket meeting.' }), 'ppn', 'transfer'] }
+  ] },
+  { kode: '524119', nama: 'Belanja Perjalanan Dinas Paket Meeting Luar Kota', ket: 'Paket meeting fullboard di luar kota satker penyelenggara', schemes: [
+    { id: 'k1', nama: 'Tagihan perjalanan peserta/panitia', dasar: 'Perka 13/2026 Bab IX.B.4.a',
+      info: ['Dilaksanakan di luar kota satker penyelenggara. Syarat tambahan: melibatkan instansi/masyarakat kabupaten/kota setempat; berskala regional/nasional/internasional; dan/atau mendapat persetujuan PPK karena teknis harus di luar kota atau lokasi terdekat.'],
+      items: ['fp', X('undangan2', {}), X('st', { n: 'Surat Tugas (peserta)' }), 'spdKolektif', 'daftarhadir', X('bukti_transpor', {}), 'notulen', 'drpp', 'transfer'] },
+    { id: 'k2', nama: 'Penyelenggaraan paket meeting', dasar: 'Perka 13/2026 Bab IX.B.4.b',
+      info: ['Paket fullboard. Eselon II/fungsional utama ke atas 1 kamar 1 orang (indeks 1,5 × satuan biaya fullboard); eselon III/fungsional madya ke bawah 1 kamar 2 orang. Narasumber dari luar instansi tidak diberi uang harian fullboard saat menjadi narasumber.', 'Penginapan dan uang harian 1 hari sebelum dan/atau sesudah kegiatan dapat dialokasikan bagi panitia/peserta yang butuh waktu tambahan karena transportasi.'],
+      items: ['kak', 'fp', 'undangan2', 'pernyataanPJ', X('st', {}), 'spdKolektif', 'daftarhadir', 'jadwal', 'notulen', X('roomlist', { c: '' }), 'tagihanHotel', 'prosesPBJ',
+        X('kuitansi', { v: 'S' }), X('pph23', { c: 'Penyelenggaraan paket meeting.' }), 'ppn', 'transfer'] }
+  ] }
+];
+
+/* alias kecil */
+LIB.rekap_k = LIB.rekap_k || { g: 'KEU', n: 'Daftar rekap kuitansi / kuitansi', v: 'P', src: ['P13', 'CKL', 'RKR'], d: 'Perka 13/2026 Bab VII',
+  s: 'Per penerima: nama, NIP/identitas, golongan (ASN), volume/jam/OB, rate sesuai SK/SBKS, bruto, potongan pajak, netto, tanda tangan. Total rekap = jumlah bukti transfer = data teknis (hindari mismatch antar dokumen).' };
+
+const PAJAK = [
+  { t: 'PPh Pasal 21', a: 'Perka 13/2026 Bab XV.A', rows: [
+    ['Objek', 'Penghasilan PNS/TNI/Polri (gaji, honorarium dsb., tidak termasuk perjalanan dinas); PPPK dan pegawai berkontrak; pegawai tidak tetap/tenaga kerja lepas; bukan pegawai (honorarium, komisi, fee); peserta kegiatan.'],
+    ['Dasar pengenaan (DPP)', 'Pegawai tidak tetap: sampai Rp2.500.000/hari = bruto sehari; di atas Rp2.500.000/hari = 50% × bruto; bulanan = bruto. Bukan pegawai = 50% × bruto. Peserta kegiatan = bruto utuh yang tidak dipecah.'],
+    ['Tarif', 'Pasal 17: 5% (s.d. Rp60 juta), 15% (Rp60-250 juta), 25% (Rp250-500 juta), 30% (Rp500 juta-5 miliar), 35% (di atas Rp5 miliar). Tarif Efektif Bulanan (TER) Kategori A/B/C sesuai status PTKP — tabel ada di Perka 13/2026 hlm. 45-48.'],
+    ['Honor PNS (final)', 'Ringkasan lembar kerja satker (CKL): Gol. IV 15%, Gol. III 5%, Gol. I/II 0%, final dari bruto. Tarif ini tidak dimuat teksnya dalam Perka 13/2026; konfirmasikan ke Bendahara/KPPN. Kode setor 411121-402.'],
+    ['Honor non-PNS (ringkasan satker)', 'CKL: ber-NPWP 5% × 50% × bruto; tanpa NPWP 6% × 50% × bruto (lebih tinggi 20%). Honor mitra O-B: bila honor sebulan tidak melebihi PTKP, tidak dipotong (Perka 13/2026 Bab VII.A.2.f).'],
+    ['Setor dan lapor', 'Setor paling lama 7 hari setelah tanggal pembayaran (mekanisme UP). SPT Masa PPh 21/26 paling lama 20 hari setelah masa pajak berakhir. Kode setoran 411121-100.'] ] },
+  { t: 'PPh Pasal 22', a: 'Perka 13/2026 Bab XV.B', rows: [
+    ['Objek', 'Pembelian barang dari rekanan pemerintah (ATK, konsumsi rapat, komputer supplies, seminar kit, perlengkapan rapat).'],
+    ['Syarat dan tarif', '1,5% dari harga pembelian tidak termasuk PPN, bila pembayaran lebih dari Rp2.000.000 (tidak termasuk PPN).'],
+    ['Tidak dipungut', 'Pembayaran paling banyak Rp2 juta yang bukan pecahan transaksi; pembayaran dengan kartu kredit pemerintah (KKP); BBM, BBG, pelumas, benda pos, air, listrik; rekanan dengan surat keterangan bebas; transaksi UP melalui Pihak Lain dalam Sistem Informasi Pengadaan yang sudah dipungut pihak lain.'],
+    ['Setor', 'Paling lama 7 hari setelah pembayaran UP; SPT Unifikasi paling lama 20 hari setelah masa pajak. Kode 411122-910.'] ] },
+  { t: 'PPh Pasal 23', a: 'Perka 13/2026 Bab XV.C', rows: [
+    ['Objek', 'Sewa dan penghasilan lain sehubungan penggunaan harta (selain yang dikenai PPh 4 ayat 2); imbalan jasa teknik, manajemen, konsultan, dan jasa lain (event organizer, catering, sewa kendaraan, penyelenggaraan paket meeting, service kendaraan, dll.).'],
+    ['Tarif', '2% dari jumlah bruto, tanpa batas minimal pembayaran.'],
+    ['Tidak dipotong', 'Rekanan dengan surat keterangan bebas; transaksi UP melalui Pihak Lain dalam Sistem Informasi Pengadaan yang sudah dipungut pihak lain.'],
+    ['Setor', 'Paling lama 7 hari setelah pembayaran UP; SPT Unifikasi paling lama 20 hari. Kode 411124-104.'] ] },
+  { t: 'PPh Final Pasal 4 ayat (2)', a: 'Perka 13/2026 Bab XV.D', rows: [
+    ['Sewa tanah/bangunan', '10% dari jumlah bruto nilai persewaan (contoh: sewa gudang). Kode 411128-403.'],
+    ['Peredaran bruto tertentu', '0,5% dari jumlah pembayaran (PP 23/2018 atau PP 55/2022), untuk WP dengan omzet di bawah Rp4,8 miliar per tahun. Kode 411128-423.'],
+    ['Jasa konstruksi', '1,75% (kualifikasi kecil); 4% (tanpa sertifikat); 2,65% (lainnya dan terintegrasi bersertifikat); 3,5% / 6% konsultansi konstruksi (bersertifikat / tidak). Kode 411128-409.'],
+    ['Setor', 'Paling lama 7 hari setelah pembayaran UP.'] ] },
+  { t: 'PPN', a: 'Perka 13/2026 Bab XV.E', rows: [
+    ['Objek', 'Pembayaran lebih dari Rp2.000.000 (tidak termasuk PPN dan PPnBM) kepada rekanan PKP.'],
+    ['Tarif', '12% berlaku 1 Januari 2025, dihitung dengan DPP nilai lain (11/12 × harga jual). Dasar pengenaan jasa pengiriman: 10% dari harga jual/nilai penyerahan.'],
+    ['Rekanan non-PKP', 'Berdasarkan Pasal 126 PER-11/PJ/2025 (dikutip Perka), Instansi Pemerintah wajib memungut PPN atas pengadaan dari rekanan non-PKP; disetor dengan SSP/ID Billing tanpa faktur pajak.'],
+    ['Tidak dipungut', 'Paling banyak Rp2 juta yang bukan pecahan; KKP; pengadaan tanah; BBM tertentu oleh Pertamina dan anak usaha; jasa telekomunikasi; jasa angkutan udara; fasilitas PPN tidak dipungut/dibebaskan; UP melalui Pihak Lain dalam Sistem Informasi Pengadaan.'],
+    ['Setor', 'Paling lama 7 hari; SPT Unifikasi paling lama 20 hari. Kode 411211-910 (PKP) dan 411211-108 (non-PKP).'] ] }
+];
+
+/* ===== Tambahan: akun belanja lain dalam DIPA BPS Kab. Bojonegoro (Laporan Ketersediaan Dana Detail TA 2026, per Oktober 2026) =====
+   v: 'P' = Perka BPS 13/2026; 'R' = peraturan / pedoman resmi lain (PMK, Perpres, pedoman DJPb); 'S' = praktik / analogi, perlu validasi PPK/PPSPM. */
+
+Object.assign(SRC, {
+  DIPA: { t: 'Laporan Ketersediaan Dana Detail TA 2026, BPS Kab. Bojonegoro (periode Oktober 2026)', k: 'Dasar penentuan akun belanja yang dipakai satker dan uraian itemnya. Berkas: "Laporan Fa Detail 16 Segmen 27 Oktober 2026.pdf".' },
+  P62: { t: 'PMK No. 62 Tahun 2023 tentang Perencanaan Anggaran, Pelaksanaan Anggaran, serta Akuntansi dan Pelaporan Keuangan, diubah dengan PMK No. 107 Tahun 2024', k: 'Disebut sebagai dasar hukum pada halaman DJPb "Syarat SPM-LS Belanja Pegawai (Akun 51)". Teks PMK tidak dibaca langsung; rujuk pasal pada salinan resmi JDIH Kemenkeu.' },
+  DJPB: { t: 'DJPb Kemenkeu — Syarat SPM-LS Belanja Pegawai (Akun 51), laman KPPN Tapaktuan', k: 'Memuat dokumen pengajuan gaji induk, kekurangan, susulan, terusan, uang makan, uang lembur, dan tunjangan kinerja, dengan dasar PMK 62/2023 jo. 107/2024, PMK 80/2017, PMK 202/2020, PMK 135/2022, PER-24/PB/2020. Dibaca 14 Okt 2026.' },
+  PIN: { t: 'PINANDU151 — Pedoman Uraian dan Lampiran SPM (KPPN Tanjung), mengacu Surat Kepala KPPN Tanjung S-360/KPN.1902/2025 tgl 30 Juli 2025', k: 'Format uraian dan lampiran SPM per jenis belanja (gaji, tunjangan kinerja, lembur, tagihan non-kontrak, pemeliharaan, belanja modal, honor operasional). Judul halaman menyebut 2025 sedangkan daftar lampiran berjudul 2026; cocokkan dengan Panduan Uraian SPM 2026 dari KPPN mitra kerja Anda.' },
+  SBM: { t: 'PMK No. 32 Tahun 2025 tentang Standar Biaya Masukan Tahun Anggaran 2026 (Lampiran I)', k: 'Angka 1 honorarium pengelola keuangan; Angka 23-24 uang lembur dan uang makan lembur. PMK 54/2026 berjudul SBM Tahun 2027 menurut hasil pencarian, jadi tidak dipakai untuk DIPA 2026.' },
+  PBJ: { t: 'Perpres No. 16 Tahun 2018 jo. Perpres No. 12 Tahun 2021, diubah dengan Perpres No. 46 Tahun 2025 (Pengadaan Barang/Jasa Pemerintah)', k: 'Pasal 28 (bukti perikatan), Pasal 38 (pengadaan langsung), Pasal 50 (e-purchasing). Dibaca dari salinan pasal.id berstatus "belum ditinjau"; cocokkan dengan salinan resmi.' },
+  BMN: { t: 'PMK No. 181/PMK.06/2016 (Penatausahaan BMN) dan KEP-311/PB/2021 (segmen akun BAS), melalui pengumuman KPPN Kotabumi S-454 (16 Agustus 2022)', k: 'Batas kapitalisasi peralatan dan mesin Rp1.000.000 dan gedung dan bangunan Rp25.000.000; akun 521252 untuk barang di bawah batas. Sumber tahun 2022: cek perubahan terbaru.' }
+});
+
+Object.assign(LIB, {
+  /* ---- umum belanja operasional ---- */
+  komitOps: { g: 'REN', n: 'Dokumen komitmen (sesuai nilai pengadaan)', v: 'R', src: ['PBJ', 'PIN'], tier: true, d: 'Perpres PBJ jo. Perpres 46/2025 Pasal 28 dan Pasal 38',
+    s: 'Bentuk perikatan mengikuti nilai: bukti pembelian/pembayaran (paling banyak Rp10 juta); kuitansi (paling banyak Rp50 juta); SPK (di atas Rp50 juta sampai Rp200 juta); surat perjanjian (di atas Rp200 juta); Surat/Bukti Pesanan bila e-purchasing (wajib bila barang/jasa ada di katalog elektronik, kecuali PPK menilai katalog tidak memenuhi kebutuhan). Pengadaan langsung di atas Rp50 juta memakai aplikasi pengadaan elektronik transaksional.' },
+  permintaanOps: { g: 'REN', n: 'Permintaan pengguna / nota dinas kepada PPK', v: 'S', src: ['P13'], d: 'Praktik, analogi Form Permintaan pada Perka 13/2026',
+    s: 'Menyebut kebutuhan, jumlah, dan alasan; bertanggal sebelum transaksi. Untuk belanja operasional kantor, bentuknya bisa nota dinas atau form permintaan di aplikasi internal. Rujukan tegas untuk kegiatan sensus/survei ada pada Perka 13/2026; untuk operasional kantor ini praktik yang perlu disetujui PPK.' },
+  barangTerima: { g: 'PEL', n: 'BAST / berita acara penerimaan barang atau hasil pekerjaan', v: 'R', src: ['PIN', 'PBJ'], d: 'Format lampiran SPM (BAST direkam di SAKTI); Perpres PBJ',
+    s: 'Menyatakan barang/pekerjaan diterima sesuai spesifikasi, jumlah, dan tanggal. Untuk pembayaran berbasis kontrak/pemeliharaan, KPPN meminta tangkapan layar perekaman BAST di SAKTI sebagai lampiran SPM.' },
+  kuitansiOps: { g: 'KEU', n: 'Kuitansi / nota / invoice asli', v: 'R', src: ['PIN', 'PBJ'], d: 'Uraian SPM non-kontrak: "sesuai kuitansi/bukti pembayaran/tagihan/invoice No. …"; Perpres 46/2025 Pasal 28',
+    s: 'Nama penyedia, tanggal, rincian, dan nilai sama dengan komitmen dan SPM. Kuitansi bermaterai bila disyaratkan ketentuan bea meterai. Uraian SPM mencantumkan nomor dokumen tagihan ini.' },
+
+  /* ---- belanja pegawai (SPM-LS) ---- */
+  pg_uraian: { g: 'PAY', n: 'Uraian SPM sesuai format', v: 'R', src: ['PIN'], d: 'Pedoman Uraian dan Lampiran SPM (PINANDU151), butir A dan B',
+    s: 'Gaji induk: "Pembayaran Gaji Induk Bulan … 20xx untuk … pegawai/… jiwa". Tunjangan kinerja: "Pembayaran Tunjangan Kinerja bulan … 20xx untuk … pegawai". Lembur: "Pembayaran uang lembur bulan … sesuai SPK Lembur No. … tgl … untuk … pegawai".' },
+  pg_spm: { g: 'PAY', n: 'SPM-LS beserta Detail CoA dari SAKTI', v: 'R', src: ['DJPB'], d: 'DJPb, Syarat SPM-LS Belanja Pegawai; PMK 62/2023 jo. 107/2024',
+    s: 'Dokumen pengajuan pertama pada semua jenis SPM-LS gaji. Segmen akun pada CoA sesuai jenis penghasilan (mis. 511111 gaji pokok, 511129 uang makan).' },
+  pg_perubahan: { g: 'PEL', n: 'Daftar Perubahan Data Pegawai (dari Gaji Web)', v: 'R', src: ['DJPB'], d: 'DJPb, Syarat SPM-LS Belanja Pegawai; PER-24/PB/2020',
+    s: 'Dicetak dari aplikasi Gaji Web; memuat perubahan data pegawai pada bulan berjalan (mutasi, kenaikan gaji berkala, perubahan keluarga).' },
+  pg_rekap: { g: 'PEL', n: 'Cetakan Rekapitulasi dan Halaman Depan (dari Gaji Web)', v: 'R', src: ['DJPB'], d: 'DJPb, Syarat SPM-LS Belanja Pegawai',
+    s: 'Jumlah dan jiwa pada rekapitulasi sama dengan uraian dan nilai SPM. Gaji wajib direkonsiliasi melalui gaji.kemenkeu.go.id.' },
+  pg_ssp: { g: 'KEU', n: 'SSP / bukti setor pajak atas penghasilan (PPh Pasal 21)', v: 'R', src: ['DJPB', 'PIN'], c: 'Ada potongan pajak.', d: 'DJPb, Syarat SPM-LS Belanja Pegawai; PINANDU151 butir A dan B',
+    s: 'Dilampirkan bila ada potongan pajak. Setoran sesuai jumlah PPh yang tercantum pada daftar gaji/tunjangan.' },
+  pg_rek: { g: 'PAY', n: 'Daftar rekening terlampir', v: 'R', src: ['DJPB', 'PIN'], c: 'Penerima lebih dari satu pegawai.', d: 'DJPb, Syarat SPM-LS Belanja Pegawai; PINANDU151',
+    s: 'Nomor rekening dan nama penerima sama dengan data kepegawaian. Pembayaran ke rekening pegawai secara giral.' },
+  pg_waktu: { g: 'UJI', n: 'Ketepatan waktu pengajuan SPM', v: 'R', src: ['DJPB'], d: 'DJPb, Syarat SPM-LS Belanja Pegawai',
+    s: 'Gaji induk disampaikan paling lambat tanggal 15 sebelum bulan pembayaran (bila tanggal 15 libur, 1 hari kerja sebelumnya). Tunjangan kinerja: paling lambat HK-2 bila SP2D tanggal 1 jatuh pada hari libur, HK-1 bila tanggal 1 hari kerja; tanggal 2 dan seterusnya sesuai rencana pengajuan satker.' },
+  pg_spmt: { g: 'PEL', n: 'SPMT / SK pengangkatan (gaji susulan CPNS/PNS baru)', v: 'R', src: ['DJPB'], c: 'Pegawai baru atau CPNS.', d: 'DJPb, Syarat SPM-LS Belanja Pegawai (Perka BKN 14/2018)',
+    s: 'Gaji susulan CPNS dibayar berdasarkan tanggal berlaku SPMT, bukan TMT pada SK CPNS. Tanggal SPMT tidak boleh mendahului tanggal penetapan SK pengangkatan.' },
+  pg_skpp: { g: 'PEL', n: 'SKPP yang disahkan KPPN mitra kerja lama', v: 'R', src: ['DJPB'], c: 'Pegawai pindahan.', d: 'DJPb, Syarat SPM-LS Belanja Pegawai',
+    s: 'Dipindai (PDF) dan dilampirkan bersama file *.KRM (PNS) dari aplikasi gaji; untuk CPNS baru, file *.KRM dibuat setelah SK, SPMT, dan data keluarga direkam lengkap.' },
+  pg_daftarSendiri: { g: 'PEL', n: 'Daftar tersendiri: selisih yang seharusnya diterima dan yang telah dibayar', v: 'R', src: ['DJPB'], c: 'Kekurangan gaji, susulan, gaji terusan, THR, atau gaji ke-13.', d: 'DJPb, Syarat SPM-LS Belanja Pegawai',
+    s: 'Kekurangan gaji disusun dalam daftar tersendiri, dibayar paling cepat bersamaan dengan gaji induk, secara giral ke rekening pegawai. Gaji susulan dibayarkan untuk seluruh komponen belanja. Besaran THR dan gaji ke-13 mengikuti ketentuan tahun berjalan (berubah setiap tahun, cek ulang).' },
+  pg_terusan: { g: 'PEL', n: 'Dokumen ahli waris dan keterangan terusan (terusan ke berapa, bulan apa)', v: 'R', src: ['DJPB'], c: 'Gaji terusan.', d: 'DJPb, Syarat SPM-LS Belanja Pegawai',
+    s: 'Dibayarkan kepada ahli waris selama 4 bulan untuk PNS. Uraian SPM wajib mencantumkan terusan ke berapa dan bulan yang dimaksud.' },
+
+  /* ---- uang makan ---- */
+  um_hadir: { g: 'PEL', n: 'Daftar hadir hari kerja sebagai dasar perhitungan', v: 'R', src: ['DJPB'], d: 'DJPb, Syarat SPM-LS Belanja Pegawai (uang makan)',
+    s: 'Uang makan dibayar per bulan berdasarkan daftar hadir hari kerja. Hari tidak hadir atau cuti tidak dihitung sesuai ketentuan yang berlaku.' },
+  um_rekap: { g: 'PEL', n: 'Daftar Rekapitulasi Uang Makan (dari Gaji Web)', v: 'R', src: ['DJPB'], d: 'DJPb, Syarat SPM-LS Belanja Pegawai (uang makan)',
+    s: 'Jumlah hari dan jumlah pegawai sama dengan daftar hadir dan nilai SPM.' },
+
+  /* ---- lembur ---- */
+  lb_spkl: { g: 'REN', n: 'Surat Perintah Kerja Lembur (SPKL)', v: 'R', src: ['DJPB', 'SBM'], d: 'DJPb, Syarat SPM-LS Belanja Pegawai (uang lembur); PMK 32/2025 Lampiran I Angka 23',
+    s: 'Lembur hanya untuk pekerjaan yang diperintahkan secara tertulis oleh pejabat berwenang, dengan tanggal surat sebelum pelaksanaan lembur. Nomor dan tanggal SPKL dicantumkan pada uraian SPM.' },
+  lb_laporan: { g: 'PEL', n: 'Daftar hadir / jam lembur dan laporan hasil kerja lembur', v: 'S', src: ['SBM'], d: 'Praktik pembuktian jam kerja lembur; PMK 32/2025 Angka 23 menyatakan satuan per jam',
+    s: 'Jam mulai dan selesai lembur, uraian pekerjaan, dan hasil. Jam lembur pada rekapitulasi sama dengan bukti kehadiran. Batas jam lembur per hari/bulan mengikuti ketentuan yang berlaku; teksnya tidak dibaca untuk aplikasi ini, tanyakan ke Bendahara.' },
+  lb_rekap: { g: 'KEU', n: 'Daftar rekapitulasi pembayaran lembur (dari Gaji Web)', v: 'R', src: ['DJPB', 'PIN'], d: 'DJPb, Syarat SPM-LS Belanja Pegawai; PINANDU151 butir B',
+    s: 'Memuat nama, golongan, jumlah jam, tarif, dan PPh 21. Tarif ASN per jam: Gol. I Rp18.000, II Rp24.000, III Rp30.000, IV Rp36.000. Non-ASN: honorer Rp20.000; satpam, pengemudi, petugas kebersihan, pramubakti Rp13.000 (alih daya dikecualikan).' },
+  lb_makan: { g: 'KEU', n: 'Uang makan lembur (bila berhak)', v: 'R', src: ['SBM'], c: 'Lembur paling singkat 2 jam berturut-turut.', d: 'PMK 32/2025 Lampiran I Angka 23.2 dan 24.2; ketentuan syarat menurut pemberitaan infopublik',
+    s: 'Dibayar paling banyak sekali per hari, per hari kerja. ASN: Gol. I-II Rp35.000, III Rp37.000, IV Rp41.000. Non-ASN: honorer Rp31.000; satpam/pengemudi/kebersihan/pramubakti Rp30.000. Syarat 2 jam berturut-turut diambil dari berita infopublik atas PMK 32/2025; cocokkan dengan teks PMK.' },
+
+  /* ---- tunjangan kinerja ---- */
+  tk_nominatif: { g: 'KEU', n: 'Daftar nominatif tunjangan kinerja (Lampiran A PMK 80/2017)', v: 'R', src: ['DJPB'], d: 'DJPb, Syarat SPM-LS Belanja Pegawai (tunjangan kinerja); PMK 80/2017',
+    s: 'Format Lampiran A: nama, NIP, kelas jabatan, tunjangan, potongan, dan jumlah bersih.' },
+  tk_rekapB: { g: 'KEU', n: 'Rekapitulasi tunjangan kinerja (Lampiran B PMK 80/2017)', v: 'R', src: ['DJPB', 'PIN'], d: 'DJPb, Syarat SPM-LS Belanja Pegawai (tunjangan kinerja); PINANDU151 butir B',
+    s: 'Jumlah pada rekapitulasi sama dengan SPM dan daftar nominatif.' },
+  tk_dasar: { g: 'REN', n: 'Dasar perhitungan: rekap kehadiran dan capaian kinerja bulan bersangkutan', v: 'S', src: ['DJPB'], d: 'Praktik; PMK 80/2017 menjadi acuan format, rincian dasar potongan tidak dibaca',
+    s: 'Pemotongan tunjangan karena ketidakhadiran/pelanggaran disiplin dihitung sesuai ketentuan kementerian dan dicatat pada rekap bulanan. Mintakan aturan pemotongan terbaru ke bagian kepegawaian.' },
+
+  /* ---- honor operasional satker ---- */
+  hos_sk: { g: 'REN', n: 'SK KPA penetapan penerima honorarium operasional satker', v: 'R', src: ['PIN'], d: 'PINANDU151 butir D: "…berdasarkan SK No. …"',
+    s: 'Uraian SPM mencantumkan nomor SK. SK memuat nama dan jabatan penerima (KPA, PPK, PPSPM, bendahara, staf pengelola keuangan, pejabat pengadaan, pengelola SAI) dan bulan berlaku.' },
+  hos_besaran: { g: 'KEU', n: 'Besaran sesuai standar biaya masukan dan pita pagu', v: 'R', src: ['SBM', 'DIPA'], d: 'PMK 32/2025 Lampiran I Angka 1; DIPA 3522',
+    s: 'Per orang per bulan menurut pita pagu: pagu di atas Rp10 miliar sampai Rp100 miliar = KPA Rp1.800.000, PPK Rp1.750.000, PPSPM Rp750.000, Bendahara Rp660.000, Staf Pengelola Keuangan Rp490.000. Pagu satker per Oktober 2026 Rp30,99 miliar, dan nilai DIPA 521115 untuk kelima jabatan ini sama dengan besaran pita tersebut. Honor pejabat pengadaan dan pengelola SAI tidak ada pada bagian PMK yang dibaca; ikuti SK KPA dan DIPA.' },
+  hos_daftar: { g: 'PEL', n: 'Daftar penerima bulanan dan daftar rekening', v: 'R', src: ['PIN'], c: 'Penerima lebih dari satu.', d: 'PINANDU151 butir D',
+    s: 'Cetakan SAKTI daftar rekening. Satu uraian SPM per bulan: "Pembayaran Honorarium … Bulan … untuk … pegawai berdasarkan SK No. …".' },
+  hos_rangkap: { g: 'UJI', n: 'Tidak ada rangkap penerimaan untuk jabatan/tugas yang sama', v: 'S', src: ['SBM'], d: 'Praktik kendali; rujuk catatan pada SBM',
+    s: 'Satu orang tidak menerima dua honorarium untuk tugas yang sama pada bulan yang sama. Aturan rangkap jabatan rinci mengikuti catatan pada Lampiran I PMK 32/2025; konfirmasi ke Bendahara.' },
+
+  /* ---- langganan daya dan jasa ---- */
+  lg_tagihan: { g: 'PEL', n: 'Tagihan / rekening resmi penyedia (listrik, telepon, air, internet)', v: 'R', src: ['PIN'], d: 'PINANDU151 butir C1: "sesuai tagihan/invoice No. …"',
+    s: 'Memuat nama pelanggan, ID pelanggan/nomor sambungan, periode, pemakaian, dan jumlah tagihan. ID pelanggan sama dengan yang tercatat pada satker (bukan rumah dinas atau pihak lain).' },
+  lg_bukti: { g: 'KEU', n: 'Bukti pembayaran atas tagihan', v: 'R', src: ['PIN'], d: 'PINANDU151 butir C1',
+    s: 'Struk/bukti bayar dari penyedia atau bukti transfer. Nilai sama dengan tagihan dan SPM. Satu tagihan untuk satu periode; tunggakan periode lalu dan denda keterlambatan ditinjau terpisah.' },
+  lg_perjanjian: { g: 'REN', n: 'Perjanjian/pesanan layanan berlangganan (khusus internet, telepon pascabayar, layanan paket)', v: 'S', src: ['PBJ'], c: 'Layanan non-utilitas, mis. koneksi internet berlangganan.', d: 'Perpres PBJ Pasal 28 sebagai analogi',
+    s: 'Periode dan harga layanan berlangganan memiliki dasar pesanan/kontrak yang masih berlaku. Listrik dan air dari penyedia tunggal berlangganan tanpa proses pemilihan tersendiri; tanyakan ke PPK bila ada perbedaan perlakuan.' },
+  lg_pajak: { g: 'KEU', n: 'Perlakuan pajak: bukan objek pungutan satker untuk listrik, air, telepon, jasa telekomunikasi', v: 'P', src: ['P13'], d: 'Perka 13/2026 Bab XV.B dan XV.E (pengecualian)',
+    s: 'PPh Pasal 22 dikecualikan untuk pembayaran listrik, air, dan telepon; PPN atas jasa telekomunikasi tidak dipungut oleh Instansi Pemerintah. Ketentuan ini dikutip dari bab perpajakan Perka 13/2026; verifikasi bahwa tagihan sudah memuat PPN bila penyedia PKB/PKP.' },
+
+  /* ---- pemeliharaan ---- */
+  pm_identitas: { g: 'PEL', n: 'Identitas BMN yang dipelihara (kode barang/NUP/nomor polisi) dan hasil pemeriksaan kerusakan', v: 'S', src: ['DIPA'], d: 'Praktik; DIPA 3522 membedakan pemeliharaan per objek (kendaraan, AC, PC, printer, jaringan listrik, gedung, halaman)',
+    s: 'Objek yang dipelihara adalah BMN satker yang tercatat; ada keterangan kerusakan dan pekerjaan yang diperlukan sebelum pengerjaan.' },
+  pm_rincian: { g: 'KEU', n: 'Rincian suku cadang/bahan dan jasa pada nota atau invoice', v: 'S', src: ['P13'], d: 'Praktik; perlakuan pajak dari Perka 13/2026 Bab XV (PPh 22 barang, PPh 23 jasa)',
+    s: 'Nota memisahkan nilai barang (suku cadang) dan nilai jasa servis agar jenis pajak dapat ditentukan dengan benar (PPh 22 untuk barang di atas Rp2 juta, PPh 23 untuk jasa).' },
+  pm_kapitalisasi: { g: 'UJI', n: 'Bukan penambahan nilai aset (bukan belanja modal)', v: 'S', src: ['BMN'], d: 'PMK 181/PMK.06/2016 sebagai rujukan; isi aturan kapitalisasi pasca-perolehan tidak dibaca',
+    s: 'Pekerjaan sebatas mempertahankan kondisi (servis, ganti suku cadang). Bila pekerjaan menambah kapasitas, mutu, atau umur manfaat dan nilainya mencapai batas kapitalisasi, PPK dan operator BMN menilai apakah masuk belanja modal. DIPA memuat "Pengadaan software pendukung perwajahan publikasi" di akun 523121; perlakuan akuntansi software perlu dikonfirmasi.' },
+
+  /* ---- ekstrakomptabel dan modal ---- */
+  ek_nilai: { g: 'UJI', n: 'Nilai per unit barang di bawah batas kapitalisasi (peralatan dan mesin: di bawah Rp1.000.000)', v: 'R', src: ['BMN'], d: 'PMK 181/PMK.06/2016 melalui pengumuman KPPN Kotabumi S-454',
+    s: 'Akun 521252 hanya untuk barang peralatan dan mesin di bawah satuan minimum kapitalisasi. Bila harga satuan (termasuk biaya perolehan) mencapai Rp1.000.000 atau lebih, belanja masuk akun modal (532111), bukan 521252. Cek per jenis barang pada DIPA, mis. meja kerja, kursi, CCTV, sofa.' },
+  ek_catat: { g: 'PEL', n: 'Pencatatan sebagai BMN ekstrakomptabel dan penempelan label', v: 'S', src: ['BMN'], d: 'Praktik; barang ekstrakomptabel dicatat di luar neraca (daftar barang ekstrakomptabel)',
+    s: 'Barang dicatat dalam daftar ekstrakomptabel oleh operator BMN dengan ruang/pengguna yang jelas. Konfirmasi tata cara pencatatan ke pengelola BMN satker.' },
+  mo_pesanan: { g: 'REN', n: 'Bukti pesanan / kontrak e-purchasing atau SPK/perjanjian', v: 'R', src: ['PBJ', 'PIN'], d: 'Perpres 46/2025 Pasal 28 dan Pasal 50; PINANDU151 butir C (belanja modal Inaproc)',
+    s: 'Bentuk mengikuti nilai (lihat butir komitmen). Barang di katalog elektronik wajib dibeli lewat e-purchasing kecuali PPK menilai katalog tidak memenuhi kebutuhan. Uraian SPM: "Pembayaran Belanja Modal berupa … sesuai SP/Kontrak Nomor …".' },
+  mo_invoice: { g: 'KEU', n: 'Invoice INAPROC / invoice penyedia', v: 'R', src: ['PIN'], d: 'PINANDU151 butir C (Inaproc: lampiran SPM invoice)',
+    s: 'Invoice dari sistem pengadaan elektronik sama nilai dan nomornya dengan bukti pesanan dan SPM.' },
+  mo_bast: { g: 'PEL', n: 'BAST dan tangkapan layar perekaman BAST di SAKTI', v: 'R', src: ['PIN'], d: 'PINANDU151 butir C (belanja modal)',
+    s: 'BAST ditandatangani PPK dan penyedia setelah barang diperiksa; perekaman BAST di SAKTI dilampirkan pada SPM.' },
+  mo_periksa: { g: 'PEL', n: 'Berita acara pemeriksaan barang: spesifikasi, jumlah, nomor seri, kartu garansi', v: 'S', src: ['PBJ'], d: 'Praktik, analogi hasil pemeriksaan pekerjaan pada Perpres PBJ',
+    s: 'Spesifikasi sama dengan pesanan; nomor seri dan kartu garansi dicatat; serah terima ke pengguna dibuktikan tanda terima.' },
+  mo_bmn: { g: 'PEL', n: 'Pencatatan aset (kapitalisasi) di SAKTI dan penetapan penggunaan BMN', v: 'R', src: ['BMN'], d: 'PMK 181/PMK.06/2016: batas kapitalisasi peralatan dan mesin Rp1.000.000',
+    s: 'Barang bernilai di atas batas kapitalisasi dicatat sebagai aset tetap: kode barang, NUP, tanggal perolehan, dan lokasi. Penetapan status penggunaan mengikuti ketentuan BMN.' },
+
+  /* ---- kendaraan / keperluan kantor ---- */
+  kp_kendaraan: { g: 'PEL', n: 'Bukti resmi pembayaran pajak/administrasi kendaraan (STNK, PKB, SWDKLLJ)', v: 'S', src: ['DIPA'], d: 'Praktik; DIPA 3522 item pengurusan surat kendaraan eselon III dan roda 2',
+    s: 'Bukti bayar resmi dari Samsat; nomor polisi, masa berlaku, dan tahun pajak sama dengan BMN kendaraan satker. Pembayaran ini kewajiban kepada kas negara/daerah; konfirmasi ke Bendahara apakah ada pemungutan pajak tambahan (umumnya tidak).' },
+  kp_resi: { g: 'PEL', n: 'Bukti pengiriman (resi) atau invoice layanan', v: 'S', src: ['P13', 'DIPA'], d: 'Perka 13/2026 Bab XI membedakan akun surat via Pos (521114) dari jasa pengiriman (521219); DIPA 3522 menempatkan "Pengiriman Surat Dinas" pada 521111',
+    s: 'Resi memuat tujuan dan tanggal; nomor surat dinas dicatat di buku ekspedisi. Penempatan akun mengikuti DIPA 3522 (521111). Bila PPK ragu atas kesesuaian akun, konfirmasi dengan BPS Provinsi.' },
+  kp_langganan: { g: 'PEL', n: 'Invoice dan periode langganan layanan (mis. Zoom)', v: 'S', src: ['DIPA'], d: 'Praktik; DIPA 3522 item "Langganan Paket Zoom Meeting"',
+    s: 'Periode dan jumlah lisensi sama dengan invoice dan kebutuhan. Bila penyedia luar negeri, tanyakan ke Bendahara soal pemungutan PPN atas pemanfaatan jasa luar negeri.' }
+});
+
+/* ---------- skema pembantu ---------- */
+const A = (id, o) => X(id, Object.assign({ v: 'S', src: ['P13'], d: 'Analogi Perka 13/2026 (ketentuan sensus/survei), dipakai sebagai praktik untuk belanja operasional' }, o || {}));
+const ADD_ACC = [];
+
+/* --- Belanja pegawai: gaji dan tunjangan melekat gaji (PNS) --- */
+const PEG_PAY = ['pg_uraian'];
+function schemeGajiInduk(kode) {
+  return { id: 'i' + kode, nama: 'Pembayaran bulanan (gaji induk) – SPM-LS', dasar: 'DJPb Syarat SPM-LS Belanja Pegawai; PMK 62/2023 jo. 107/2024',
+    info: ['Komponen penghasilan bulanan dibayarkan bersama gaji induk dalam satu SPM-LS belanja pegawai; rekapitulasi akun per komponen ada pada Gaji Web.', 'Akun belanja pegawai tidak melalui UP/GUP; pembayaran LS ke rekening pegawai dan SSP pajak setor dari bendahara.'],
+    items: ['pg_spm', 'pg_uraian', 'pg_perubahan', 'pg_rekap', 'pg_ssp', 'pg_rek', 'pg_waktu'], pay: ['sp2d'] };
+}
+function schemeGajiLain(kode) {
+  return { id: 's' + kode, nama: 'Susulan / kekurangan / terusan', dasar: 'DJPb Syarat SPM-LS Belanja Pegawai',
+    info: ['Kekurangan, susulan, dan terusan disusun dalam daftar tersendiri, tidak dicampur dengan gaji induk.', 'Gaji susulan CPNS memakai tanggal berlaku SPMT (Perka BKN 14/2018, dikutip DJPb).'],
+    items: ['pg_spm', 'pg_uraian', 'pg_daftarSendiri', 'pg_perubahan', 'pg_rekap', 'pg_spmt', 'pg_skpp', 'pg_terusan', 'pg_ssp', 'pg_rek'], pay: ['sp2d'] };
+}
+[
+  ['511111', 'Belanja Gaji Pokok PNS', 'Gaji pokok PNS, dibayar LS bulanan'],
+  ['511119', 'Belanja Pembulatan Gaji PNS', 'Pembulatan gaji PNS'],
+  ['511121', 'Belanja Tunj. Suami/Istri PNS', 'Tunjangan suami/istri PNS'],
+  ['511122', 'Belanja Tunj. Anak PNS', 'Tunjangan anak PNS'],
+  ['511123', 'Belanja Tunj. Struktural PNS', 'Tunjangan struktural PNS'],
+  ['511124', 'Belanja Tunj. Fungsional PNS', 'Tunjangan fungsional PNS'],
+  ['511125', 'Belanja Tunj. PPh PNS', 'Tunjangan PPh PNS'],
+  ['511126', 'Belanja Tunj. Beras PNS', 'Tunjangan beras PNS'],
+  ['511151', 'Belanja Tunjangan Umum PNS', 'Tunjangan umum PNS'],
+  ['511611', 'Belanja Gaji Pokok PPPK', 'Gaji pokok PPPK (PMK 202/2020)'],
+  ['511619', 'Belanja Pembulatan Gaji PPPK', 'Pembulatan gaji PPPK'],
+  ['511621', 'Belanja Tunjangan Suami/Istri PPPK', 'Tunjangan suami/istri PPPK'],
+  ['511622', 'Belanja Tunjangan Anak PPPK', 'Tunjangan anak PPPK'],
+  ['511625', 'Belanja Tunjangan Beras PPPK', 'Tunjangan beras PPPK'],
+  ['511633', 'Belanja Tunjangan Umum PPPK', 'Tunjangan umum PPPK']
+].forEach(r => ADD_ACC.push({ kode: r[0], nama: r[1], ket: r[2], schemes: [schemeGajiInduk(r[0]), schemeGajiLain(r[0])] }));
+
+/* --- uang makan --- */
+[['511129', 'Belanja Uang Makan PNS', 'Uang makan PNS, dibayar bulanan'], ['511628', 'Belanja Uang Makan PPPK', 'Uang makan PPPK, dibayar bulanan']].forEach(r => ADD_ACC.push({
+  kode: r[0], nama: r[1], ket: r[2], schemes: [{ id: 'u' + r[0], nama: 'Uang makan bulanan', dasar: 'DJPb Syarat SPM-LS Belanja Pegawai (uang makan)',
+    info: ['Dibayar per bulan berdasarkan daftar hadir hari kerja.'],
+    items: ['pg_spm', 'pg_uraian', 'um_hadir', 'um_rekap', 'pg_ssp', 'pg_rek', 'pg_waktu'], pay: ['sp2d'] }] }));
+
+/* --- lembur --- */
+ADD_ACC.push({ kode: '512211', nama: 'Belanja Uang Lembur', ket: 'Uang lembur dan uang makan lembur pegawai', schemes: [{ id: 'l512211', nama: 'Uang lembur', dasar: 'DJPb Syarat SPM-LS Belanja Pegawai; PMK 32/2025 Lampiran I Angka 23-24',
+  info: ['Hanya untuk kerja lembur yang diperintahkan dengan SPKL bertanggal sebelum pelaksanaan.', 'Tarif per jam dan uang makan lembur ada pada PMK 32/2025 (SBM 2026); pegawai alih daya (outsourcing) dikecualikan.'],
+  items: ['lb_spkl', 'pg_spm', 'pg_uraian', 'lb_laporan', 'lb_rekap', 'lb_makan', 'pg_ssp', 'pg_rek'], pay: ['sp2d'] }] });
+
+/* --- tunjangan kinerja --- */
+[['512411', 'Belanja Pegawai (Tunjangan Khusus/Kegiatan/Kinerja)', 'Tunjangan kinerja PNS, dibayar bulanan', 'DJPb Syarat SPM-LS Belanja Pegawai; PMK 80/2017'],
+ ['512414', 'Belanja Pegawai Tunjangan Khusus/Kegiatan/Kinerja PPPK', 'Tunjangan kinerja PPPK, dibayar bulanan', 'DJPb Syarat SPM-LS Belanja Pegawai; PMK 202/2020 (PPPK)']].forEach(r => ADD_ACC.push({
+  kode: r[0], nama: r[1], ket: r[2], schemes: [{ id: 't' + r[0], nama: 'Tunjangan kinerja bulanan', dasar: r[3],
+    info: ['Tunjangan kinerja susulan, kekurangan, dan selisih mengikuti lampiran tunjangan kinerja biasa (PINANDU151 tidak memuat entri lampiran terpisah untuk 2026).', 'Pajak: PPh Pasal 21 setor dari bendahara.'],
+    items: ['pg_spm', 'pg_uraian', 'tk_nominatif', 'tk_rekapB', 'tk_dasar', 'pg_ssp', 'pg_rek', 'pg_waktu'], pay: ['sp2d'] }] }));
+
+/* --- honor operasional satker --- */
+ADD_ACC.push({ kode: '521115', nama: 'Belanja Honor Operasional Satuan Kerja', ket: 'Honor KPA, PPK, PPSPM, bendahara, staf pengelola keuangan, pejabat pengadaan, pengelola SAI', schemes: [{ id: 'o521115', nama: 'Honor operasional satker bulanan', dasar: 'PMK 32/2025 Lampiran I Angka 1; PINANDU151 butir D',
+  info: ['Dibayar bulanan berdasarkan SK KPA. Per Oktober 2026 DIPA 3522 memuat KPA, PPK, PPSPM, bendahara, pejabat pengadaan, staf pengelola keuangan, dan pengelola SAI (ketua/anggota/koordinator).'],
+  items: ['hos_sk', 'hos_besaran', 'hos_daftar', X('pph21', { n: 'SSP / bukti setor PPh Pasal 21 atas honorarium' }), 'hos_rangkap', 'pg_uraian', 'transfer'], pay: ['spm', 'sp2d'] }] });
+
+/* --- keperluan perkantoran --- */
+ADD_ACC.push({ kode: '521111', nama: 'Belanja Keperluan Perkantoran', ket: 'Keperluan sehari-hari kantor, surat kendaraan, pengiriman surat dinas, langganan layanan', schemes: [
+  { id: 'k521111a', nama: 'Pembelian keperluan sehari-hari kantor', dasar: 'Perpres PBJ jo. Perpres 46/2025 Pasal 28; Perka 13/2026 Bab XV (pajak)',
+    info: ['Aturan tegas kegiatan sensus/survei ada pada Perka 13/2026. Untuk keperluan perkantoran, butir permintaan dan pencatatan adalah praktik yang disetujui PPK.'],
+    items: ['permintaanOps', 'komitOps', 'barangTerima', 'kuitansiOps', 'pph22', 'ppn', 'transfer'] },
+  { id: 'k521111b', nama: 'Pengurusan surat/pajak kendaraan', dasar: 'DIPA 3522; praktik',
+    info: ['Berlaku untuk kendaraan operasional eselon III dan roda 2 (DIPA item 000533-000534).'],
+    items: ['permintaanOps', 'kp_kendaraan', 'kuitansiOps', 'transfer'] },
+  { id: 'k521111c', nama: 'Pengiriman surat dinas / langganan layanan', dasar: 'DIPA 3522; Perka 13/2026 Bab XI (perbandingan akun)',
+    info: ['DIPA 3522 menempatkan "Pengiriman Surat Dinas" dan "Langganan Paket Zoom Meeting" pada akun 521111.'],
+    items: ['permintaanOps', 'komitOps', 'kp_resi', 'kp_langganan', 'kuitansiOps', 'ppn', 'pph23', 'transfer'] }
+] });
+
+/* --- ekstrakomptabel --- */
+ADD_ACC.push({ kode: '521252', nama: 'Belanja Peralatan dan Mesin – Ekstrakomptabel', ket: 'Meja, kursi, CCTV, sofa, dll. di bawah batas kapitalisasi', schemes: [{ id: 'e521252', nama: 'Pengadaan barang ekstrakomptabel', dasar: 'PMK 181/PMK.06/2016; KEP-311/PB/2021; Perpres PBJ Pasal 28',
+  info: ['Barang dengan harga satuan di bawah Rp1.000.000 (peralatan dan mesin). Bila sama atau lebih, pakai akun modal 532111.', 'Batas kapitalisasi bersumber dari pengumuman KPPN tahun 2022; cek perubahan terbaru dengan pengelola BMN.'],
+  items: ['permintaanOps', 'komitOps', 'barangTerima', 'ek_nilai', 'kuitansiOps', 'ek_catat', 'pph22', 'ppn', 'transfer'] }] });
+
+/* --- langganan daya dan jasa --- */
+[['522111', 'Belanja Langganan Listrik', 'Tagihan listrik kantor', 'l'], ['522112', 'Belanja Langganan Telepon', 'Telepon kantor (pascabayar)', 't'], ['522113', 'Belanja Langganan Air', 'Tagihan air kantor', 'a'], ['522119', 'Belanja Langganan Daya dan Jasa Lainnya', 'Koneksi internet berlangganan, daya dan jasa lain', 'j']].forEach(r => ADD_ACC.push({
+  kode: r[0], nama: r[1], ket: r[2], schemes: [{ id: r[3] + r[0], nama: 'Pembayaran tagihan bulanan', dasar: 'PINANDU151 butir C1; Perka 13/2026 Bab XV (pengecualian pajak)',
+    info: ['Dibayar sesuai tagihan penyedia (non-kontrak) kecuali ada perjanjian layanan; uraian SPM menyebut nomor dokumen tagihan.'],
+    items: (r[0] === '522119' || r[0] === '522112' ? ['lg_perjanjian'] : []).concat(['lg_tagihan', 'lg_bukti', 'kuitansiOps', 'lg_pajak', 'transfer']) }] }));
+
+/* --- pemeliharaan --- */
+function schemePemeliharaan(id, nama, info) {
+  return { id: id, nama: nama, dasar: 'Perpres PBJ jo. Perpres 46/2025 Pasal 28; PINANDU151 butir C2/C3 (kontrak) dan C1 (non-kontrak)', info: info,
+    items: ['permintaanOps', 'pm_identitas', 'komitOps', 'barangTerima', 'pm_rincian', 'kuitansiOps', 'pph22', 'pph23', 'ppn', 'pm_kapitalisasi', 'transfer'] };
+}
+ADD_ACC.push({ kode: '523111', nama: 'Belanja Pemeliharaan Gedung dan Bangunan', ket: 'Pemeliharaan gedung kantor bertingkat, halaman kantor', schemes: [
+  schemePemeliharaan('m523111', 'Pemeliharaan gedung dan halaman', ['Pemeliharaan berbasis kontrak: SPM dilampiri ringkasan kontrak (Karwas) dan tangkapan layar BAST di SAKTI.', 'Pemeliharaan non-kontrak (nilai kecil): uraian SPM "sesuai kuitansi/tagihan/invoice No. …".'])] });
+ADD_ACC.push({ kode: '523121', nama: 'Belanja Pemeliharaan Peralatan dan Mesin', ket: 'Servis kendaraan, AC, PC/laptop, printer, jaringan listrik, inventaris', schemes: [
+  schemePemeliharaan('m523121', 'Pemeliharaan peralatan dan mesin', ['DIPA 3522 memuat kendaraan roda 2 dan eselon, AC, PC/laptop, printer, jaringan listrik, inventaris kantor, dan software pendukung publikasi.', 'Pemeliharaan berbasis kontrak: ringkasan kontrak (Karwas) dan tangkapan layar BAST di SAKTI sebagai lampiran SPM.'])] });
+
+/* --- belanja modal --- */
+ADD_ACC.push({ kode: '532111', nama: 'Belanja Modal Peralatan dan Mesin', ket: 'Pengadaan peralatan dan mesin (mis. laptop) bernilai di atas batas kapitalisasi', schemes: [{ id: 'mo532111', nama: 'Pengadaan peralatan dan mesin (e-purchasing / pengadaan langsung)', dasar: 'Perpres PBJ jo. Perpres 46/2025 Pasal 28 dan 50; PINANDU151 butir C; PMK 181/PMK.06/2016',
+  info: ['Belanja modal dapat dibayar lewat GUP (SPM saja) maupun LS; untuk pembayaran LS SPM dilampiri invoice sistem pengadaan elektronik dan tangkapan layar BAST di SAKTI.', 'Barang yang harga satuannya di bawah batas kapitalisasi tidak boleh dibukukan di akun ini (lihat akun 521252).'],
+  items: [A('kak', { n: 'Kerangka Acuan Kerja / spesifikasi teknis barang' }), 'permintaanOps', 'mo_pesanan', 'mo_periksa', 'mo_bast', 'mo_invoice', 'mo_bmn', 'kuitansiOps', 'pph22', 'ppn', 'transfer'] }] });
+
+/* --- tambahan pada 521219: penggantian responden dan pulsa petugas --- */
+(function () {
+  const a = ACCOUNTS.filter(x => x.kode === '521219')[0];
+  a.ket = 'Jasa pengiriman/ekspedisi, asuransi petugas, penggantian biaya responden, pulsa petugas';
+  a.schemes.push({ id: 'c3', nama: 'Penggantian biaya responden', dasar: 'DIPA 3522 (item survei pertanian, SKGB, SKJG); juknis kegiatan',
+    info: ['Kata "responden" tidak ditemukan dalam teks Perka 13/2026, sehingga butir di bawah merupakan praktik kendali yang perlu disetujui PPK. Besaran dan syarat penerima mengikuti pedoman teknis kegiatan dan DIPA.'],
+    items: ['kak', 'fp', 'komit2',
+      X('daftarResp', { g: 'PEL', n: 'Daftar penerima penggantian (nama, alamat, nomor identitas responden)', v: 'S', src: ['DIPA'], d: 'Praktik; DIPA 3522 item 000501, 000502, 000842, 000843, 000953, 000954, 001103', s: 'Penerima adalah responden sampel kegiatan yang tercatat pada daftar sampel; jumlah dan besaran sesuai pedoman teknis kegiatan.' }),
+      X('tandaTerimaResp', { g: 'PEL', n: 'Tanda terima atau bukti penyerahan kepada responden', v: 'S', src: ['DIPA'], d: 'Praktik kendali pembayaran tunai/nontunai kepada penerima', s: 'Ditandatangani/dikonfirmasi penerima, atau bukti transfer bila nontunai. Petugas yang menyerahkan sama dengan petugas pada SK.' }),
+      'npwp_rek', 'transfer'] });
+  const a4 = ACCOUNTS.filter(x => x.kode === '521211')[0].schemes.filter(s => s.id === 'a4')[0];
+  a.schemes.push(Object.assign({}, a4, { id: 'c4', nama: 'Pulsa / paket data petugas (survei)', info: ['DIPA 3522 memuat "Biaya pulsa petugas Survei Bidang Jasa Pariwisata" pada akun 521219 (item 000437); butir sama dengan skema paket data pada 521211.'].concat(a4.info) }));
+})();
+
+/* --- tambahan ringkasan pajak untuk belanja pegawai dan operasional --- */
+PAJAK.push({ t: 'Belanja pegawai dan operasional kantor (ringkasan)', a: 'DJPb, PINANDU151, Perka 13/2026 Bab XV, PMK 32/2025', rows: [
+  ['Gaji, tunjangan kinerja, lembur', 'PPh Pasal 21 dipotong dan disetor melalui SSP yang dilampirkan pada SPM-LS bila ada potongan pajak (DJPb/PINANDU151). Tarif dan DPP mengikuti peraturan PPh 21 dan daftar gaji dari Gaji Web.'],
+  ['Honor operasional satker', 'PPh Pasal 21 atas honorarium; tarif tergantung status penerima (PNS, PPPK, non-ASN) mengikuti bab XV.A Perka 13/2026.'],
+  ['Listrik, air, telepon, jasa telekomunikasi', 'Dikecualikan dari PPh Pasal 22 (Bab XV.B) dan PPN jasa telekomunikasi tidak dipungut (Bab XV.E).'],
+  ['Pemeliharaan dan pembelian barang', 'PPh 22 (1,5%) untuk barang bila di atas Rp2.000.000; PPh 23 (2%) untuk jasa servis; PPN sesuai status rekanan. Nota memisahkan barang dan jasa.'],
+  ['Pajak/administrasi kendaraan', 'Pembayaran PKB/SWDKLLJ/STNK adalah kewajiban kepada kas negara/daerah; konfirmasi ke Bendahara apakah ada pemungutan.'] ] });
+
+/* --- tandai akun pada DIPA dan susun urutan --- */
+(function () {
+  const DIPA_KODE = new Set(['511111','511119','511121','511122','511123','511124','511125','511126','511129','511151','511611','511619','511621','511622','511625','511628','511633','512211','512411','512414','521111','521115','521211','521213','521219','521252','521811','522111','522112','522113','522119','522151','523111','523121','524111','524113','524114','532111']);
+  ACCOUNTS.push.apply(ACCOUNTS, ADD_ACC);
+  ACCOUNTS.sort((x, y) => x.kode < y.kode ? -1 : 1);
+  ACCOUNTS.forEach(a => {
+    a.grp = a.kode.slice(0, 2) === '51' ? 'Belanja Pegawai (51)' : a.kode.slice(0, 2) === '52' ? 'Belanja Barang (52)' : 'Belanja Modal (53)';
+    a.dipa = DIPA_KODE.has(a.kode);
+    if (!a.dipa) a.ket += ' — tidak ada pada DIPA 3522 per Okt 2026';
+  });
+})();
+
+/* --- akun paling sering dipakai: jumlah komponen kegiatan yang memuat akun pada DIPA 3522 (Laporan Ketersediaan Dana Detail, Okt 2026); [komponen, item] --- */
+const PAKAI = { '521213': [41, 144], '524113': [39, 105], '521211': [36, 79], '521811': [29, 77], '524111': [10, 10], '524114': [8, 22], '521219': [5, 9], '522151': [3, 4] };
+
+</script>
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)};
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function rp(n){return 'Rp'+Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.')}
+function parseNum(s){var t=String(s||'').replace(/[^\d]/g,'');return t?parseInt(t,10):0}
+
+var ORDER=['REN','PEL','KEU','PAY','UJI'];
+var COMMON_PAY=['spp','spm','sp2d'];
+var COMMON_UJI=['uji_kronologi','uji_angka','uji_rek','uji_dossier'];
+var cur={acc:null,sch:null};
+var st={};   // state per skema
+var query='';
+
+function merge(a,b){var o={},k;for(k in a)o[k]=a[k];for(k in b)o[k]=b[k];return o}
+function schemeOf(kode,id){
+  for(var i=0;i<ACCOUNTS.length;i++){var a=ACCOUNTS[i];if(a.kode!==kode)continue;
+    for(var j=0;j<a.schemes.length;j++)if(a.schemes[j].id===id)return {a:a,s:a.schemes[j]}}
+  return null;
+}
+function resolve(sc){
+  var raw=sc.items.slice(),seen={},out=[];
+  (sc.pay||COMMON_PAY).forEach(function(i){raw.push(i)});
+  COMMON_UJI.forEach(function(i){raw.push(i)});
+  raw.forEach(function(r){
+    var id=Array.isArray(r)?r[0]:r, ov=Array.isArray(r)?r[1]:{};
+    if(seen[id])return; seen[id]=1;
+    var base=LIB[id]||{};
+    var it=merge(merge({id:id},base),ov);
+    if(!it.n)return;
+    out.push(it);
+  });
+  var res=[],n=0;
+  ORDER.forEach(function(g){
+    var list=out.filter(function(i){return i.g===g});
+    if(list.length)res.push({g:g,items:list.map(function(i){n++;i.no=n;return i})});
+  });
+  return res;
+}
+function load(id){
+  if(st[id])return st[id];
+  var o={m:{},nilai:'',satker:'',keg:'',spm:'',tgl:'',cetakCatatan:true};
+  try{var raw=localStorage.getItem('jagad2:'+id);if(raw){var p=JSON.parse(raw);if(p&&typeof p==='object')o=merge(o,p)}}catch(e){}
+  st[id]=o;return o;
+}
+function save(id){try{localStorage.setItem('jagad2:'+id,JSON.stringify(st[id]))}catch(e){}}
+
+/* ---------- daftar akun ---------- */
+function haystack(a,s){
+  var t=[a.kode,a.nama,a.ket,s.nama,s.dasar];
+  resolve(s).forEach(function(g){g.items.forEach(function(i){t.push(i.n)})});
+  return t.join(' ').toLowerCase();
+}
+var sideTab='grp';
+function freqList(){
+  if(typeof PAKAI==='undefined')return [];
+  return Object.keys(PAKAI).sort(function(x,y){return PAKAI[y][0]-PAKAI[x][0]||PAKAI[y][1]-PAKAI[x][1]}).slice(0,8)
+    .map(function(k){return ACCOUNTS.filter(function(a){return a.kode===k})[0]}).filter(Boolean);
+}
+function accHtml(a,badge,withSch){
+  var on=cur.acc===a.kode,h='<button class="acc'+(on?' on':'')+'" data-a="'+a.kode+'"><b>'+a.kode+'</b> '+esc(a.nama)+(badge?'<em class="cnt">'+badge+'</em>':'')+'<span>'+esc(a.ket)+'</span></button>';
+  if(on&&withSch)h+='<div class="schs">'+a.schemes.map(function(s){return '<button data-a="'+a.kode+'" data-s="'+s.id+'" class="'+(cur.sch===s.id?'on':'')+'">'+esc(s.nama)+'</button>'}).join('')+'</div>';
+  return h;
+}
+function renderAccs(){
+  var h='',searching=query.trim()!=='';
+  $('#accs').classList.toggle('hide',searching);$('#stabs').classList.toggle('hide',searching);
+  if(searching)return;
+  [].forEach.call(document.querySelectorAll('#stabs button'),function(b){b.classList.toggle('on',b.getAttribute('data-t')===sideTab)});
+  if(sideTab==='kode'){
+    ACCOUNTS.forEach(function(a){h+=accHtml(a,'',true)});
+  }else{
+    var fl=freqList(),fk={};
+    if(fl.length){
+      h+='<div class="grph fav">Paling sering dipakai</div><div class="legend" style="margin:0 2px 6px">Urut jumlah komponen kegiatan yang memuat akun pada DIPA 3522 (Okt 2026).</div>';
+      fl.forEach(function(a){fk[a.kode]=1;h+=accHtml(a,PAKAI[a.kode][0]+' komp.',true)});
+    }
+    var last='';
+    ACCOUNTS.forEach(function(a){
+      if(a.grp&&a.grp!==last){h+='<div class="grph">'+esc(a.grp)+'</div>';last=a.grp}
+      h+=accHtml(a,'',!fk[a.kode]);
+    });
+  }
+  $('#accs').innerHTML=h;
+}
+$('#stabs').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;sideTab=b.getAttribute('data-t');renderAccs()});
+$('#accs').addEventListener('click',function(e){
+  var b=e.target.closest('button');if(!b)return;
+  var a=b.getAttribute('data-a'),s=b.getAttribute('data-s');
+  if(!s){var ac=ACCOUNTS.filter(function(x){return x.kode===a})[0];s=ac.schemes[0].id}
+  go(a,s);
+});
+/* ---------- pencarian dengan rekomendasi ---------- */
+var IDX=null,sres=[],sact=-1;
+function buildIdx(){
+  IDX=[];
+  ACCOUNTS.forEach(function(a){
+    IDX.push({t:'a',a:a,s:a.schemes[0],label:a.kode+' '+a.nama,sub:a.ket,title:(a.kode+' '+a.nama).toLowerCase(),body:(a.ket+' '+(a.grp||'')).toLowerCase()});
+    a.schemes.forEach(function(s){
+      IDX.push({t:'s',a:a,s:s,label:s.nama,sub:'Akun '+a.kode+' · '+a.nama,title:s.nama.toLowerCase(),body:(a.kode+' '+a.nama+' '+a.ket+' '+(s.dasar||'')).toLowerCase()});
+      resolve(s).forEach(function(g){g.items.forEach(function(i){
+        IDX.push({t:'d',a:a,s:s,id:i.id,label:i.n,sub:'Akun '+a.kode+' · '+s.nama,title:i.n.toLowerCase(),body:((i.s||'')+' '+(i.d||'')+' '+(i.c||'')).toLowerCase()});
+      })});
+    });
+  });
+}
+function searchIdx(q){
+  if(!IDX)buildIdx();
+  var ql=q.toLowerCase().trim().replace(/\s+/g,' '),tk=ql.split(' ').filter(Boolean),out=[];
+  IDX.forEach(function(e,n){
+    var sc=0,ok=true;
+    for(var k=0;k<tk.length;k++){
+      var w=tk[k],it=e.title.indexOf(w),ib=e.body.indexOf(w);
+      if(it<0&&ib<0){ok=false;break}
+      sc+=it>=0?(it===0?5:3):1;
+    }
+    if(!ok)return;
+    if(tk.length>1){if(e.title.indexOf(ql)>=0)sc+=6;else if(e.body.indexOf(ql)>=0)sc+=2}
+    if(e.t==='a'&&e.a.kode.indexOf(tk[0])===0)sc+=8;
+    if(e.t==='a')sc+=2;
+    if(e.t==='s')sc+=1;
+    out.push({e:e,sc:sc,n:n});
+  });
+  out.sort(function(x,y){return y.sc-x.sc||x.n-y.n});
+  var cap={a:5,s:8,d:25},got={a:[],s:[],d:[]},tot={a:0,s:0,d:0};
+  out.forEach(function(r){var t=r.e.t;tot[t]++;if(got[t].length<cap[t])got[t].push(r.e)});
+  return {got:got,tot:tot};
+}
+function hlText(txt,tk){
+  var s=esc(txt);
+  tk.forEach(function(w){if(!w)return;var re=new RegExp('('+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig');s=s.replace(re,function(m){return /^&|;$/.test(m)?m:'<mark>'+m+'</mark>'})});
+  return s;
+}
+function renderSugg(){
+  var q=query.trim(),box=$('#sugg');
+  $('#q-x').classList.toggle('hide',!q);
+  if(!q){box.classList.add('hide');box.innerHTML='';sres=[];sact=-1;renderAccs();return}
+  var r=searchIdx(q),tk=q.toLowerCase().split(/\s+/).filter(Boolean),h='';
+  sres=[];
+  [['a','Akun belanja'],['s','Skema'],['d','Dokumen / syarat']].forEach(function(g){
+    var l=r.got[g[0]];if(!l.length)return;
+    h+='<div class="sg-h">'+g[1]+' ('+r.tot[g[0]]+')</div>';
+    l.forEach(function(e){
+      var k=sres.length;sres.push(e);
+      h+='<button type="button" class="sg" role="option" data-k="'+k+'"><span>'+hlText(e.label,tk)+'</span><small>'+hlText(e.sub,tk)+'</small></button>';
+    });
+    if(r.tot[g[0]]>l.length)h+='<div class="sg-n">+'+(r.tot[g[0]]-l.length)+' hasil lain — tambahkan kata kunci agar lebih spesifik.</div>';
+  });
+  if(!sres.length)h='<div class="sg-n">Tidak ada rekomendasi untuk “'+esc(q)+'”. Coba kata yang lebih umum, mis. kuitansi, honor, hotel, SPKL, atau nomor akun.</div>';
+  box.innerHTML=h;box.classList.remove('hide');sact=-1;renderAccs();
+}
+function setAct(n){
+  var b=[].slice.call(document.querySelectorAll('#sugg .sg'));if(!b.length)return;
+  sact=(n+b.length)%b.length;
+  b.forEach(function(x,i){x.classList.toggle('on',i===sact)});
+  b[sact].scrollIntoView({block:'nearest'});
+}
+function pick(e){
+  query='';var q=$('#q');q.value='';$('#sugg').classList.add('hide');$('#sugg').innerHTML='';$('#q-x').classList.add('hide');sres=[];sact=-1;
+  go(e.a.kode,e.s.id);
+  if(e.t==='d'){
+    var el=document.querySelector('.it[data-id="'+e.id+'"]');
+    if(el){el.classList.add('hl');if(el.scrollIntoView)el.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){el.classList.remove('hl')},3500)}
+  }
+}
+$('#q').addEventListener('input',function(){query=this.value;renderSugg()});
+$('#q').addEventListener('keydown',function(ev){
+  if(ev.key==='ArrowDown'){ev.preventDefault();setAct(sact+1)}
+  else if(ev.key==='ArrowUp'){ev.preventDefault();setAct(sact-1)}
+  else if(ev.key==='Enter'){if(sres.length){ev.preventDefault();pick(sres[sact>=0?sact:0])}}
+  else if(ev.key==='Escape'){query='';this.value='';renderSugg()}
+});
+$('#sugg').addEventListener('click',function(ev){var b=ev.target.closest('.sg');if(!b)return;pick(sres[+b.getAttribute('data-k')])});
+$('#q-x').addEventListener('click',function(){query='';$('#q').value='';renderSugg();$('#q').focus()});
+
+function go(a,s,noHash){
+  cur.acc=a;cur.sch=s;
+  if(!noHash){try{history.replaceState(null,'','#'+a+'/'+s)}catch(e){}}
+  renderAccs();renderWork();
+  if(window.innerWidth<=900){var w=$('#work');if(w&&w.scrollIntoView)w.scrollIntoView({behavior:'smooth',block:'start'})}
+}
+
+/* ---------- panel kerja ---------- */
+function tierText(it,nilai){
+  if(!nilai)return '';
+  var t;
+  if(nilai<=10000000)t='bukti pembelian/pembayaran atau kuitansi';
+  else if(nilai<=50000000)t='kuitansi';
+  else if(it.id==='komit2')t='di luar batas yang diatur Bab XIV (kuitansi paling banyak Rp50 juta) — tinjau ke PPK';
+  else if(nilai<=200000000)t='Surat Perintah Kerja (SPK)';
+  else t='Surat Perjanjian';
+  return 'Nilai '+rp(nilai)+' → '+t+(it.id==='komit2'?'':' (atau Surat/Bukti Pesanan bila e-purchasing)');
+}
+function applicable(it,s){
+  var nilai=parseNum(s.nilai);
+  if(nilai>0&&typeof it.th==='number'&&nilai<=it.th)return false;
+  return true;
+}
+function stats(groups,s){
+  var tot=0,ok=0,na=0,miss=[];
+  groups.forEach(function(g){g.items.forEach(function(i){
+    var m=s.m[i.id]||0;
+    if(!applicable(i,s)||m===2){na++;return}
+    tot++;if(m===1)ok++;else miss.push(i);
+  })});
+  return {tot:tot,ok:ok,na:na,miss:miss};
+}
+function renderWork(){
+  var r=schemeOf(cur.acc,cur.sch);
+  if(!r){$('#work').innerHTML='<div class="card"><h2>Pilih akun belanja</h2><p>Pilih salah satu akun di sebelah kiri untuk menampilkan daftar kelengkapan dokumen, syarat sah, dan catatan verifikasinya.</p></div>'+welcome();return}
+  var a=r.a,sc=r.s,s=load(sc.id),groups=resolve(sc),nilai=parseNum(s.nilai),stt=stats(groups,s);
+  var h='<div class="card ttl"><small>Akun '+a.kode+' · '+esc(a.nama)+'</small><h2>'+esc(sc.nama)+'</h2><small>Dasar: '+esc(sc.dasar)+'</small>'
+   +'<div class="meta">'
+   +'<div><label for="f-nilai">Nilai transaksi (Rp) — opsional</label><input id="f-nilai" inputmode="numeric" placeholder="mis. 12.500.000" value="'+esc(s.nilai)+'"></div>'
+   +'<div><label for="f-satker">Satuan kerja (untuk cetak)</label><input id="f-satker" placeholder="BPS Kabupaten/Kota …" value="'+esc(s.satker)+'"></div>'
+   +'<div><label for="f-keg">Nama kegiatan</label><input id="f-keg" value="'+esc(s.keg)+'"></div>'
+   +'<div><label for="f-spm">No. SPM / SPP</label><input id="f-spm" value="'+esc(s.spm)+'"></div>'
+   +'</div>'
+   +'<div class="tools"><button class="btn org" id="b-print">Cetak lembar checklist</button>'
+   +'<label class="chk"><input type="checkbox" id="f-cc"'+(s.cetakCatatan?' checked':'')+'> sertakan syarat sah &amp; catatan verifikasi</label>'
+   +'<button class="btn ghost sm" id="b-all">Tandai semua ada</button><button class="btn ghost sm" id="b-reset">Kosongkan</button><button class="btn ghost sm" id="b-copy">Salin kekurangan</button><button class="btn ghost sm" id="b-link">Salin tautan</button></div></div>';
+  if(sc.info&&sc.info.length)h+='<div class="info card"><b>Catatan skema</b><ul>'+sc.info.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul></div>';
+  var pct=stt.tot?Math.round(stt.ok*100/stt.tot):0;
+  h+='<div class="card prog"><div><b id="p-txt">'+stt.ok+' dari '+stt.tot+' dokumen ada</b><div class="legend" id="p-sub">'+stt.miss.length+' belum · '+stt.na+' tidak berlaku</div></div><div class="bar'+(stt.miss.length===0&&stt.tot?' done':'')+'"><i id="p-bar" style="width:'+pct+'%"></i></div></div>';
+  h+='<div class="card" id="list">';
+  groups.forEach(function(g){
+    h+='<div class="grp">'+GRP[g.g]+'</div>';
+    g.items.forEach(function(i){
+      var ap=applicable(i,s),m=s.m[i.id]||0;
+      var lab=!ap?'T/B':(m===1?'✓':(m===2?'T/B':''));
+      var refs=(i.src||[]).map(function(k){return k}).join(', ');
+      h+='<div class="it'+((!ap||m===2)?' na':'')+'" data-id="'+i.id+'"><button class="st" data-s="'+(!ap?2:m)+'"'+(!ap?' disabled':'')+' aria-label="Status '+esc(i.n)+'">'+lab+'</button><div>'
+       +'<h3><span class="no">'+i.no+'.</span>'+esc(i.n)+(i.v==='P'?'<span class="tag p">Perka 13/2026</span>':(i.v==='R'?'<span class="tag r">Peraturan / pedoman resmi</span>':'<span class="tag s">Praktik / validasi</span>'))+'</h3>'
+       +(i.c?'<div class="cond">Berlaku bila: '+esc(i.c)+'</div>':'')
+       +(!ap?'<div class="cond">Tidak berlaku otomatis: nilai '+rp(nilai)+' tidak melebihi '+rp(i.th)+'.</div>':'')
+       +'<p>'+esc(i.s)+'</p>'
+       +(i.tier&&nilai?'<div class="tier">'+esc(tierText(i,nilai))+'</div>':'')
+       +'<div class="ref">Dasar: '+esc(i.d)+' · Sumber: '+esc(refs)+'</div></div></div>';
+    });
+  });
+  h+='<div class="legend">Ketuk kotak di kiri: kosong → ✓ ada → T/B (tidak berlaku). Label hijau = disebut tegas dalam Perka BPS 13/2026; label biru = peraturan atau pedoman resmi lain (PMK, Perpres, pedoman DJPb); label oranye = praktik satker/analogi yang perlu divalidasi ke ketentuan terbaru atau pendapat PPK/PPSPM.</div></div>';
+  $('#work').innerHTML=h;
+  bindWork(sc,groups);
+}
+function welcome(){
+  return '<div class="card"><h3>Untuk siapa aplikasi ini?</h3><p>Siapa saja — penanggung jawab kegiatan, PPK, Bendahara, PPSPM, maupun tim teknis — dapat memilih akun belanja, memeriksa kelengkapan dokumen, dan mencetak lembar checklist. Tidak perlu masuk akun, dan tidak ada data yang dikirim ke server.</p><p class="legend">Isi centang tersimpan hanya di peramban Anda (bila diizinkan) dan dapat dikosongkan kapan saja.</p></div>';
+}
+function bindWork(sc,groups){
+  var s=load(sc.id);
+  function upd(){save(sc.id);var t=stats(groups,s),p=t.tot?Math.round(t.ok*100/t.tot):0;
+    $('#p-txt').textContent=t.ok+' dari '+t.tot+' dokumen ada';$('#p-sub').textContent=t.miss.length+' belum · '+t.na+' tidak berlaku';
+    var b=$('#p-bar');b.style.width=p+'%';b.parentNode.className='bar'+(t.miss.length===0&&t.tot?' done':'')}
+  $('#list').addEventListener('click',function(e){
+    var b=e.target.closest('.st');if(!b||b.disabled)return;
+    var id=b.closest('.it').getAttribute('data-id'),m=((s.m[id]||0)+1)%3;
+    s.m[id]=m;b.setAttribute('data-s',m);b.textContent=m===1?'✓':(m===2?'T/B':'');
+    b.closest('.it').classList.toggle('na',m===2);upd();
+  });
+  ['f-satker:satker','f-keg:keg','f-spm:spm'].forEach(function(p){var x=p.split(':');$('#'+x[0]).addEventListener('input',function(){s[x[1]]=this.value;save(sc.id)})});
+  $('#f-nilai').addEventListener('change',function(){s.nilai=this.value;save(sc.id);renderWork()});
+  $('#f-nilai').addEventListener('keydown',function(e){if(e.key==='Enter')this.blur()});
+  $('#f-cc').addEventListener('change',function(){s.cetakCatatan=this.checked;save(sc.id)});
+  $('#b-all').addEventListener('click',function(){groups.forEach(function(g){g.items.forEach(function(i){if(applicable(i,s)&&s.m[i.id]!==2)s.m[i.id]=1})});save(sc.id);renderWork()});
+  $('#b-reset').addEventListener('click',function(){if(confirm('Kosongkan semua centang untuk skema ini?')){s.m={};save(sc.id);renderWork()}});
+  $('#b-copy').addEventListener('click',function(){
+    var t=stats(groups,s);
+    var txt='Kekurangan dokumen — '+schemeOf(cur.acc,cur.sch).a.kode+' '+sc.nama+(s.keg?' ('+s.keg+')':'')+'\n'+(t.miss.length?t.miss.map(function(i){return i.no+'. '+i.n}).join('\n'):'Tidak ada: semua dokumen yang berlaku sudah ada.');
+    copy(txt,this);
+  });
+  $('#b-link').addEventListener('click',function(){copy(location.href.split('#')[0]+'#'+cur.acc+'/'+cur.sch,this)});
+  $('#b-print').addEventListener('click',function(){buildPrint(sc,groups);setTimeout(function(){window.print()},60)});
+}
+function copy(txt,btn){
+  var old=btn.textContent;
+  function ok(){btn.textContent='Tersalin ✓';setTimeout(function(){btn.textContent=old},1400)}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,function(){fb()})}else fb();
+  function fb(){var t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();try{document.execCommand('copy');ok()}catch(e){alert(txt)}document.body.removeChild(t)}
+}
+
+/* ---------- cetak ---------- */
+function buildPrint(sc,groups){
+  var r=schemeOf(cur.acc,cur.sch),a=r.a,s=load(sc.id),nilai=parseNum(s.nilai),cc=s.cetakCatatan;
+  var d=new Date(),tgl=s.tgl||d.toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'});
+  var h='<h1>LEMBAR KELENGKAPAN DOKUMEN PERTANGGUNGJAWABAN BELANJA</h1><div class="sub">Akun '+a.kode+' — '+esc(a.nama)+' · '+esc(sc.nama)+'</div>'
+   +'<table class="mt"><tr><td style="width:24%">Satuan kerja</td><td>: '+esc(s.satker||'.................................................')+'</td><td style="width:16%">Tanggal</td><td>: '+esc(tgl)+'</td></tr>'
+   +'<tr><td>Kegiatan</td><td>: '+esc(s.keg||'.................................................')+'</td><td>No. SPM/SPP</td><td>: '+esc(s.spm||'..............................')+'</td></tr>'
+   +'<tr><td>Dasar ketentuan</td><td>: '+esc(sc.dasar)+'</td><td>Nilai</td><td>: '+(nilai?rp(nilai):'..............................')+'</td></tr></table>'
+   +'<table class="ct" style="margin-top:8px"><thead><tr><th style="width:4%">No</th><th>Uraian dokumen'+(cc?' dan syarat sah / catatan verifikasi':'')+'</th><th style="width:7%">Ada<br>(PJ)</th><th style="width:7%">PPK<br>√</th><th style="width:8%">PPSPM<br>√</th><th style="width:13%">Keterangan</th></tr></thead><tbody>';
+  groups.forEach(function(g){
+    h+='<tr class="g"><td colspan="6">'+esc(GRP[g.g])+'</td></tr>';
+    g.items.forEach(function(i){
+      var ap=applicable(i,s),m=s.m[i.id]||0,mark=!ap||m===2?'T/B':(m===1?'√':'');
+      h+='<tr><td class="c">'+i.no+'</td><td><b>'+esc(i.n)+'</b>'+(i.v==='S'?' <span class="sm">†</span>':'')
+       +(i.c?'<div class="sm"><i>Berlaku bila: '+esc(i.c)+'</i></div>':'')
+       +(cc?'<div class="sm">'+esc(i.s)+'</div>':'')+(i.tier&&nilai?'<div class="sm"><b>'+esc(tierText(i,nilai))+'</b></div>':'')
+       +'</td><td class="c">'+mark+'</td><td></td><td></td><td></td></tr>';
+    });
+  });
+  h+='</tbody></table><div class="sm" style="margin-top:4px">√ = dokumen ada · T/B = tidak berlaku · † = praktik satker / materi Rakor yang perlu divalidasi (bukan butir tegas Perka BPS 13/2026).</div>'
+   +'<div class="sig"><div>Penanggung Jawab Kegiatan<i></i>(.......................................)<br>NIP.</div><div>Pejabat Pembuat Komitmen<i></i>(.......................................)<br>NIP.</div><div>Pejabat Penandatangan SPM<i></i>(.......................................)<br>NIP.</div></div>'
+   +'<div class="foot">Dicetak dari JAGAD SPJ pada '+esc(d.toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'}))+'. Rujukan: '+esc(sc.dasar)+'. Lembar ini alat bantu pemeriksaan dan tidak menggantikan penelitian PPK/PPSPM.</div>';
+  $('#print').innerHTML=h;
+}
+
+/* ---------- tab statis ---------- */
+function renderPajak(){
+  var h='<div class="card"><h2>Ringkasan pajak belanja</h2><p class="legend">Disarikan dari Perka BPS 13/2026 Bab XV (Perpajakan). Tabel tarif lengkap (TER PPh 21) ada pada naskah Perka. Konfirmasikan ke Bendahara bila ada perubahan aturan perpajakan terbaru.</p></div>';
+  PAJAK.forEach(function(p){
+    h+='<div class="card pj"><h3>'+esc(p.t)+'</h3><div class="a">'+esc(p.a)+'</div><table class="t"><tbody>'+p.rows.map(function(r){return '<tr><td style="width:26%"><b>'+esc(r[0])+'</b></td><td>'+esc(r[1])+'</td></tr>'}).join('')+'</tbody></table></div>';
+  });
+  $('#v-pajak').innerHTML=h;
+}
+function renderDasar(){
+  var h='<div class="card"><h2>Dasar ketentuan dan sumber butir</h2><p>Setiap butir pada daftar periksa ditautkan ke sumbernya. Sumber berasal dari dokumen pada Google Drive Penyusun (BPS Kab. Bojonegoro) dan, untuk akun di luar kegiatan sensus/survei, dari peraturan dan pedoman resmi yang dirujuk pada tiap butir (PMK, Perpres, pedoman DJPb).</p><ol class="src">';
+  Object.keys(SRC).forEach(function(k){h+='<li><b>'+k+'</b> — '+esc(SRC[k].t)+'<br><span class="legend">'+esc(SRC[k].k)+'</span></li>'});
+  h+='</ol></div><div class="card"><h3>Arti label</h3><p><span class="tag p" style="margin:0">Perka 13/2026</span> Butir disebut tegas dalam Kelengkapan Tagihan Pembayaran atau bab terkait pada Perka BPS 13/2026.</p><p><span class="tag r" style="margin:0">Peraturan / pedoman resmi</span> Butir bersumber dari peraturan atau pedoman resmi selain Perka 13/2026: PMK 62/2023 jo. 107/2024, PMK 32/2025, PMK 80/2017, Perpres PBJ jo. 46/2025, PMK 181/2016, dan pedoman DJPb/KPPN. Teks penuh sebagian peraturan tidak dibaca langsung (lihat catatan pada tiap sumber).</p><p><span class="tag s" style="margin:0">Praktik / validasi</span> Butir berasal dari lembar kerja satker (Kriteria Kesesuaian SPJ 2024, checklist pelatihan, contoh lembar BPS Kab. Malang) atau materi Rakor Provinsi 12 Oktober 2026. Bermanfaat sebagai kontrol, tetapi belum tentu diwajibkan teks Perka; PPK/PPSPM yang menentukan.</p></div>'
+   +'<div class="card"><h3>Batasan yang perlu diketahui</h3><ul>'
+   +'<li>Besaran tarif honor, SBM, dan SBKS tidak dimuat; lihat PMK 32/2025 (SBM 2026), Perka BPS 115/2024 beserta perubahannya (SBKS), dan SK KPA satker.</li>'
+   +'<li>Rakor menyebut tim PBJ menetapkan 38 butir checklist standar dokumen pengadaan. Daftar 38 butir itu tidak ada dalam materi yang tersedia sehingga tidak dimasukkan; butir pengadaan di sini hanya yang tertulis dalam Perka 13/2026.</li>'
+   +'<li>Ketentuan perjalanan dinas diambil dari Perka 13/2026 Bab VIII; Perka BPS 6/2024 dan PMK perjalanan dinas dalam negeri tetap menjadi rujukan rincian komponen.</li>'
+   +'<li>Pembayaran tunai mengacu Perka BPS 7/2024 sebagaimana disebut materi Rakor; isi Perka tersebut tidak dibaca ulang untuk aplikasi ini.</li>'
+   +'<li>Perka 13/2026 Bab XI menulis PPN pengiriman 1,1% sementara Bab XV menyebut tarif 12% dengan DPP nilai lain; keduanya ditampilkan apa adanya, mohon konfirmasi ke Bendahara.</li>'
+   +'</ul></div>';
+  $('#v-dasar').innerHTML=h;
+}
+function renderCara(){
+  $('#v-cara').innerHTML='<div class="card"><h2>Cara pakai</h2><ol>'
+   +'<li>Pilih <b>akun belanja</b> di daftar kiri (atau ketik kata kunci), lalu pilih <b>skema</b> yang sesuai — misalnya akun 521213 punya skema honor tim, pengajar, petugas mitra, dan PNS BPS.</li>'
+   +'<li>Isi <b>nilai transaksi</b> bila ingin aplikasi menunjuk bentuk dokumen komitmen yang tepat dan menandai pajak yang tidak berlaku (batas Rp2 juta).</li>'
+   +'<li>Ketuk kotak status pada tiap dokumen: kosong → ✓ ada → T/B. Baca <b>syarat sah dan catatan verifikasi</b> di bawah nama dokumen.</li>'
+   +'<li>Gunakan <b>Salin kekurangan</b> untuk menyalin daftar dokumen yang belum ada, atau <b>Cetak lembar checklist</b> untuk lembar A4 dengan kolom PJ, PPK, dan PPSPM serta kolom tanda tangan.</li>'
+   +'<li><b>Salin tautan</b> menghasilkan alamat langsung ke akun dan skema yang sedang dibuka sehingga mudah dibagikan.</li></ol>'
+   +'<p class="legend">Tanpa login, tanpa server. Centang dan isian hanya disimpan di peramban perangkat ini.</p></div>';
+}
+$('#nav').addEventListener('click',function(e){
+  var b=e.target.closest('button');if(!b)return;
+  [].forEach.call(document.querySelectorAll('#nav button'),function(x){x.classList.toggle('on',x===b)});
+  ['cek','pajak','dasar','cara'].forEach(function(v){$('#v-'+v).classList.toggle('hide',v!==b.getAttribute('data-v'))});
+  $('#v-cek').style.display=b.getAttribute('data-v')==='cek'?'':'none';
+});
+window.addEventListener('beforeprint',function(){var r=schemeOf(cur.acc,cur.sch);if(r)buildPrint(r.s,resolve(r.s))});
+
+renderPajak();renderDasar();renderCara();
+var m=(location.hash||'').match(/^#(\d{6})\/(\w+)$/);
+if(m&&schemeOf(m[1],m[2])){go(m[1],m[2],true)}else{renderAccs();renderWork()}
+window.JAGAD={ACCOUNTS:ACCOUNTS,LIB:LIB,resolve:resolve};
+})();
+</script>
+</body>
+</html>
